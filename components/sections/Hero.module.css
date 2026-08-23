@@ -103,6 +103,12 @@
   font-size: 9.5px;
   letter-spacing: 0.06em;
 }
+/* legend cross-light: pointing at METHOD inks the key map's route */
+@media (hover: hover) and (pointer: fine) {
+  .panel[data-active="method"] .kmSvg :is(line, circle, path) {
+    stroke-width: 2;
+  }
+}
 .partics div {
   display: flex;
   justify-content: space-between;

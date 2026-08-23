@@ -12,7 +12,8 @@
   stroke-width: 1.3;
 }
 @media (max-width: 760px) {
-  .spine {
+  /* the field edition's edge datum: numerals off, ticks and line stay */
+  .stnText {
     display: none;
   }
 }

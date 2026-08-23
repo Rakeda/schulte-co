@@ -2,15 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { prefersReducedMotion, useResizeVersion, useScrollFrame } from "@/lib/motion";
-import { FIG_NAMES } from "@/lib/data";
+import { FIGURES } from "@/lib/figures";
 import styles from "./Baseline.module.css";
 
 type Tick = { id: string; left: number; index: number };
 
 /**
- * The Baseline — the signature instrument. A fixed strip map of the whole
- * traverse: one tick per figure, a vermilion nib at scroll position 1:1.
- * The nib is the only permanently vermilion pixel on the page.
+ * The Baseline: the signature strip map. One tick per figure with a
+ * chainage flag on hover (fine pointers), a vermilion nib at scroll
+ * position 1:1, and 44px hit areas on every tick.
  */
 export default function Baseline() {
   const [ticks, setTicks] = useState<Tick[]>([]);
@@ -42,7 +42,8 @@ export default function Baseline() {
       if (sections[j].offsetTop - vh * 0.45 <= y) cur = j;
     }
     if (labRef.current) {
-      labRef.current.textContent = `FIG. 0${cur + 1} · ${FIG_NAMES[cur] ?? ""}`;
+      const f = FIGURES[cur];
+      labRef.current.textContent = f ? `FIG. ${f.figNo} · ${f.title}` : "";
     }
   });
 
@@ -56,22 +57,27 @@ export default function Baseline() {
     <nav className={styles.baseline} aria-label="Baseline strip map">
       <div className={styles.row}>
         <span ref={labRef} className={styles.lab}>
-          FIG. 01 · {FIG_NAMES[0]}
+          FIG. 01 · {FIGURES[0].title}
         </span>
         <div className={styles.track}>
           <div className={styles.line} />
-          {ticks.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              className={styles.tick}
-              style={{ left: `${t.left}%` }}
-              aria-label={`Go to FIG. 0${t.index + 1} · ${FIG_NAMES[t.index]}`}
-              onClick={() => goTo(t.index)}
-            >
-              <span className={styles.tt}>FIG. 0{t.index + 1}</span>
-            </button>
-          ))}
+          {ticks.map((t) => {
+            const f = FIGURES[t.index];
+            return (
+              <button
+                key={t.id}
+                type="button"
+                className={styles.tick}
+                style={{ left: `${t.left}%` }}
+                aria-label={`Go to FIG. ${f?.figNo} · ${f?.title}`}
+                onClick={() => goTo(t.index)}
+              >
+                <span className={styles.tt}>
+                  FIG {f?.figNo} · {f?.title}
+                </span>
+              </button>
+            );
+          })}
           <div ref={nibRef} className={styles.nib} />
         </div>
         <span className={styles.end}>END OF SURVEY →</span>

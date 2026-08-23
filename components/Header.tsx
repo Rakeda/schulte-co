@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { prefersReducedMotion, useScrollFrame } from "@/lib/motion";
 import { CONTACT, NAV_ITEMS } from "@/lib/data";
+import { FIGURES } from "@/lib/figures";
+import SheetIndex from "@/components/SheetIndex";
 import styles from "./Header.module.css";
 
 const CALIBRATION_MS = 1150;
@@ -30,6 +32,8 @@ export default function Header() {
   const sectionsRef = useRef<HTMLElement[]>([]);
   const activeRef = useRef(0);
   const [active, setActive] = useState(0);
+  const [indexOpen, setIndexOpen] = useState(false);
+  const stationRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     sectionsRef.current = Array.from(
@@ -105,6 +109,16 @@ export default function Header() {
             </a>
           ))}
         </nav>
+        <button
+          ref={stationRef}
+          type="button"
+          className={`${styles.station} mono`}
+          aria-expanded={indexOpen}
+          aria-label="Open the sheet index"
+          onClick={() => setIndexOpen(true)}
+        >
+          FIG {FIGURES[active]?.figNo ?? "01"} / 07
+        </button>
         <span className={styles.sp} />
         <a
           className={styles.coords}
@@ -121,6 +135,14 @@ export default function Header() {
         </a>
       </div>
       <span className={styles.rule} aria-hidden="true" />
+      <SheetIndex
+        open={indexOpen}
+        activeIndex={active}
+        onClose={() => {
+          setIndexOpen(false);
+          stationRef.current?.focus();
+        }}
+      />
     </header>
   );
 }

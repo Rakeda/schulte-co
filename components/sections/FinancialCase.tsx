@@ -80,6 +80,7 @@ export default function FinancialCase() {
             <p className={styles.rx}>REDUCTION: AND THAT IS ONLY ONE WORKFLOW.</p>
           </div>
           <div>
+            <div className="desk-only">
             <svg
               viewBox="0 0 420 210"
               aria-label="The 20-minute workflow drawn, struck through, and redrawn at one minute"
@@ -109,6 +110,38 @@ export default function FinancialCase() {
               FIG. 05 · DRAWN, STRUCK, AND REDRAWN BY THE TRAVERSE. WE TURN
               INEFFICIENCY INTO MEASURABLE BUSINESS VALUE.
             </p>
+            </div>
+
+            {/* field plate: the same bars at legible scale */}
+            <div className="mob-only">
+              <svg
+                viewBox="0 0 360 200"
+                aria-label="The 20-minute workflow drawn, struck through, and redrawn at one minute"
+              >
+                <text x="8" y="20" fontSize="12" fill="var(--stone)">CURRENT · 20 MIN / DAY / EMPLOYEE</text>
+                <path className="scrub" d="M8,44 H336" stroke="var(--oxide)" strokeWidth="22" fill="none" />
+                <path
+                  className="scrub"
+                  data-delay="0.5"
+                  data-flash="flStrikeM"
+                  d="M2,66 L344,24"
+                  stroke="var(--ink)"
+                  strokeWidth="2"
+                  fill="none"
+                />
+                <circle id="flStrikeM" className="flashfill" cx="344" cy="24" r="7" />
+                <text x="8" y="102" fontSize="12" fill="var(--stone)">REDESIGNED · 1 MIN / DAY</text>
+                <path className="scrub" data-delay="0.72" d="M8,124 H25" stroke="var(--cobalt)" strokeWidth="22" fill="none" />
+                <text x="36" y="129" fontSize="12" fill="var(--ochre)">19 MIN RETURNED TO REAL WORK</text>
+                <line x1="8" y1="162" x2="352" y2="162" stroke="var(--hair)" strokeWidth="1" />
+                <text x="8" y="182" fontSize="11" fill="var(--stone)">0</text>
+                <text x="168" y="182" fontSize="11" fill="var(--stone)">10</text>
+                <text x="310" y="182" fontSize="11" fill="var(--stone)">20 MIN</text>
+              </svg>
+              <p className={styles.barcap}>
+                FIG. 05 · DRAWN, STRUCK, AND REDRAWN BY THE TRAVERSE.
+              </p>
+            </div>
           </div>
         </div>
       </div>

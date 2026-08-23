@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import SurveySection from "@/components/SurveySection";
 import FigureHeader from "@/components/FigureHeader";
 import FooterLegend from "@/components/FooterLegend";
@@ -5,6 +8,8 @@ import { CONTACT, FLOW_CHAIN, PARTNERS, PE_LINE, WHO_WE_HELP } from "@/lib/data"
 import styles from "./PartnersClose.module.css";
 
 const FLOW_XS = [70, 240, 420, 590, 720];
+/* legend cross-light: the two architecture nodes key to the partner columns */
+const FLOW_KEYS = ["", "b", "t", "", ""];
 
 /**
  * FIG. 07 — THE PARTNERS & THE CLOSE. Two architects, one translation layer:
@@ -13,6 +18,7 @@ const FLOW_XS = [70, 240, 420, 590, 720];
  * at the benchmark — built, proven, handed back.
  */
 export default function PartnersClose() {
+  const [hl, setHl] = useState<string | null>(null);
   return (
     <SurveySection id="f7">
       <div className="inwrap">
@@ -21,9 +27,15 @@ export default function PartnersClose() {
           title="The Partners"
           refText="BUSINESS ↔ TECHNOLOGY, ONE TRANSLATION LAYER"
         />
+        <div className={styles.xwrap} data-active={hl ?? undefined}>
         <div className={styles.pgrid}>
           {PARTNERS.map((p, pi) => (
-            <div key={p.name} className={styles.partner}>
+            <div
+              key={p.name}
+              className={styles.partner}
+              onMouseEnter={() => setHl(pi === 0 ? "b" : "t")}
+              onMouseLeave={() => setHl(null)}
+            >
               <div className={`${styles.role} mono`}>{p.role}</div>
               <div className={styles.pname}>{p.name}</div>
               <p className={styles.pq}>&ldquo;{p.question}&rdquo;</p>
@@ -55,13 +67,14 @@ export default function PartnersClose() {
           ))}
         </div>
 
+        <div className="desk-only">
         <svg
           className={styles.flow}
           viewBox="0 0 760 90"
           aria-label="The translation chain: business problem to business architecture to technical architecture to implementation to ROI"
         >
           {FLOW_XS.map((x, i) => (
-            <g key={x}>
+            <g key={x} className={FLOW_KEYS[i] === "b" ? styles.nBiz : FLOW_KEYS[i] === "t" ? styles.nTech : undefined}>
               <circle className="scrub" data-delay={i * 0.1} cx={x} cy="34" r="6" fill="none" stroke="var(--cobalt)" strokeWidth="1.1" />
               <text x={x - FLOW_CHAIN[i].length * 2.5} y="60" fontSize="8.5" fill="var(--cobalt)">
                 {FLOW_CHAIN[i]}
@@ -85,6 +98,41 @@ export default function PartnersClose() {
             WE TRANSLATE BETWEEN BUSINESS LEADERSHIP AND TECHNICAL TEAMS, BOTH DIRECTIONS, EVERY WEEK
           </text>
         </svg>
+        </div>
+
+        {/* field plate: the chain runs vertical, the way the method rail does */}
+        <div className="mob-only">
+          <svg
+            className={styles.flowMob}
+            viewBox="0 0 360 350"
+            aria-label="The translation chain, vertical: business problem to ROI"
+          >
+            {FLOW_CHAIN.map((label, i) => (
+              <g key={label} className={FLOW_KEYS[i] === "b" ? styles.nBiz : FLOW_KEYS[i] === "t" ? styles.nTech : undefined}>
+                <circle className="scrub" data-delay={i * 0.1} cx="26" cy={30 + i * 70} r="7" fill="none" stroke="var(--cobalt)" strokeWidth="1.2" />
+                <text x="46" y={35 + i * 70} fontSize="12.5" fill="var(--cobalt)">{label}</text>
+              </g>
+            ))}
+            {FLOW_CHAIN.slice(0, -1).map((_, i) => (
+              <line
+                key={i}
+                className="scrub"
+                data-delay={0.05 + i * 0.1}
+                x1="26"
+                y1={38 + i * 70}
+                x2="26"
+                y2={92 + i * 70}
+                stroke="var(--cobalt)"
+                strokeWidth="1.1"
+              />
+            ))}
+          </svg>
+          <p className={`${styles.flowcapM} mono`}>
+            WE TRANSLATE BETWEEN BUSINESS LEADERSHIP AND TECHNICAL TEAMS, BOTH
+            DIRECTIONS, EVERY WEEK
+          </p>
+        </div>
+        </div>
 
         <div className={styles.whowrap}>
           <div className={`${styles.gh} mono`}>WHO WE WORK WITH</div>

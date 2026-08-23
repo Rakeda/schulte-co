@@ -65,6 +65,29 @@
   height: auto;
   margin-top: 26px;
 }
+.flowMob {
+  width: 100%;
+  height: auto;
+  margin-top: 22px;
+}
+.flowcapM {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--stone);
+  line-height: 1.8;
+  margin: 8px 0 0;
+}
+/* legend cross-light: hovering a partner column inks its chain node */
+@media (hover: hover) and (pointer: fine) {
+  .xwrap[data-active="b"] .nBiz circle,
+  .xwrap[data-active="t"] .nTech circle {
+    stroke-width: 2.2;
+  }
+  .xwrap[data-active="b"] .nBiz text,
+  .xwrap[data-active="t"] .nTech text {
+    font-weight: 700;
+  }
+}
 .whowrap {
   margin-top: clamp(34px, 5vw, 54px);
 }

@@ -35,6 +35,12 @@
   letter-spacing: 0.01em;
   text-decoration: none;
   color: var(--ink);
+  white-space: nowrap;
+}
+@media (max-width: 460px) {
+  .wm {
+    font-size: 16px;
+  }
 }
 .wm:hover {
   text-decoration: none;
@@ -91,6 +97,36 @@
 
 .sp {
   flex: 1;
+}
+
+/* the folded title block's station readout: mobile-only sheet-index trigger */
+.station {
+  display: none;
+  position: relative;
+  background: none;
+  border: 1px solid var(--hair);
+  padding: 5px 10px;
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.station::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+}
+@media (max-width: 880px) {
+  .station {
+    display: block;
+    margin-inline: auto;
+  }
+  .sp {
+    display: none;
+  }
 }
 .coords {
   font-family: var(--font-mono), monospace;

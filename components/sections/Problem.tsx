@@ -65,6 +65,7 @@ export default function Problem() {
             </div>
           </div>
           <div>
+            <div className="desk-only">
             <svg
               viewBox="0 0 440 260"
               aria-label="Growth curve diverging from the operating-model line; the gap between them hatched vermilion"
@@ -107,6 +108,52 @@ export default function Problem() {
               FIG. 02 · THE HATCHED AREA IS WHERE COMPANIES QUIETLY LEAK TIME,
               MARGIN, AND PATIENCE. IT IS ALSO WHERE WE WORK.
             </p>
+            </div>
+
+            {/* field plate: annotations become numbered callouts + a notes ledger */}
+            <div className="mob-only">
+              <svg
+                viewBox="0 0 360 240"
+                aria-label="Growth curve diverging from the operating-model line, with numbered callouts"
+              >
+                <defs>
+                  <pattern id="gapHatchM" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                    <line x1="0" y1="0" x2="0" y2="6" stroke="var(--verm)" strokeWidth="1" opacity=".45" />
+                  </pattern>
+                </defs>
+                <line x1="20" y1="208" x2="352" y2="208" stroke="var(--hair)" strokeWidth="1" />
+                <line x1="20" y1="208" x2="20" y2="20" stroke="var(--hair)" strokeWidth="1" />
+                <g id="gapFillM" className="hatchin">
+                  <polygon points="196,152 252,120 300,88 336,52 336,168 300,174 252,182 196,190" fill="url(#gapHatchM)" />
+                  <line x1="344" y1="52" x2="344" y2="168" stroke="var(--verm)" strokeWidth="1.4" />
+                </g>
+                <path className="scrub" d="M20,200 C110,192 220,148 336,52" fill="none" stroke="var(--oxide)" strokeWidth="1.8" />
+                <path className="scrub" data-delay=".2" data-flash="gapFillM" d="M20,200 C130,196 250,184 336,168" fill="none" stroke="var(--ink)" strokeWidth="1.5" />
+                <g>
+                  <circle cx="296" cy="76" r="9" fill="var(--paper)" stroke="var(--oxide)" strokeWidth="1.2" />
+                  <text x="296" y="80" textAnchor="middle" fontSize="11" fill="var(--oxide)">1</text>
+                  <circle cx="296" cy="182" r="9" fill="var(--paper)" stroke="var(--ink)" strokeWidth="1.2" />
+                  <text x="296" y="186" textAnchor="middle" fontSize="11" fill="var(--ink)">2</text>
+                  <circle cx="344" cy="36" r="9" fill="var(--paper)" stroke="var(--verm)" strokeWidth="1.2" />
+                  <text x="344" y="40" textAnchor="middle" fontSize="11" fill="var(--verm)">3</text>
+                </g>
+                <text x="300" y="228" fontSize="11" fill="var(--stone)">TIME →</text>
+              </svg>
+              <div className={styles.notes}>
+                <div className={`${styles.noterow} mono`}>
+                  <span className={styles.ncode} style={{ color: "var(--oxide)" }}>1</span>
+                  GROWTH: MORE OF EVERYTHING, COMPOUNDING
+                </div>
+                <div className={`${styles.noterow} mono`}>
+                  <span className={styles.ncode}>2</span>
+                  THE OPERATING MODEL: DESIGN LAGS BEHIND
+                </div>
+                <div className={`${styles.noterow} mono`}>
+                  <span className={styles.ncode} style={{ color: "var(--verm)" }}>3</span>
+                  THE GAP, HATCHED: WHERE TIME, MARGIN, AND PATIENCE LEAK
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

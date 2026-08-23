@@ -93,12 +93,19 @@ svg text {
   color: var(--oxide);
 }
 .bkt {
+  position: relative;
   font-family: var(--font-mono), monospace;
   font-size: 12px;
   letter-spacing: 0.07em;
   color: var(--ink);
   text-decoration: none;
   white-space: nowrap;
+}
+/* surveyor's hit area: the graduation stays fine, the grip grows */
+.bkt::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
 }
 .bkt:hover {
   color: var(--verm);
@@ -127,11 +134,27 @@ main.survey {
 }
 @media (max-width: 760px) {
   :root {
-    --gutter: 0px;
+    /* the field edition keeps its datum line: a narrow edge gutter */
+    --gutter: 20px;
   }
-  main.survey {
-    padding-left: 0;
+}
+
+/* field-edition figure variants: desktop plate vs redrawn mobile plates */
+.mob-only {
+  display: none;
+}
+@media (max-width: 639px) {
+  .desk-only {
+    display: none;
   }
+  .mob-only {
+    display: block;
+  }
+}
+
+/* with JS present the vermilion brackets replace the default focus ring */
+.js-anim :focus-visible {
+  outline: none;
 }
 
 /* ================= ARRIVALS (armed by useReveal) ================= */

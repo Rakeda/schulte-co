@@ -15,6 +15,7 @@ import styles from "./Hero.module.css";
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const [entry, setEntry] = useState(0);
+  const [hl, setHl] = useState(false);
   useReveal(ref);
 
   useEffect(() => {
@@ -106,13 +107,17 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className={`${styles.panel} wipe`} style={{ "--d": ".3s" } as React.CSSProperties}>
+          <div
+            className={`${styles.panel} wipe`}
+            style={{ "--d": ".3s" } as React.CSSProperties}
+            data-active={hl ? "method" : undefined}
+          >
             <div className={styles.inset}>
               <div className={styles.ilab}>
                 <span>KEY MAP · THE METHOD</span>
                 <a href="#f4" data-snap>SEE FIG. 04</a>
               </div>
-              <svg viewBox="0 0 300 92" aria-label="Key map: eight numbered steps with one gate between quantify and architect">
+              <svg className={styles.kmSvg} viewBox="0 0 300 92" aria-label="Key map: eight numbered steps with one gate between quantify and architect">
                 <line className="autodraw" x1="20" y1="38" x2="138" y2="38" stroke="var(--ink)" strokeWidth="1.2" />
                 <line className="autodraw" x1="158" y1="38" x2="275" y2="38" stroke="var(--ink)" strokeWidth="1.2" />
                 {[
@@ -138,7 +143,12 @@ export default function Hero() {
               </svg>
             </div>
             <div className={`${styles.partics} mono`}>
-              <div><span>METHOD</span><b>BUILD · PROVE · TEACH · HAND BACK</b></div>
+              <div
+                onMouseEnter={() => setHl(true)}
+                onMouseLeave={() => setHl(false)}
+              >
+                <span>METHOD</span><b>BUILD · PROVE · TEACH · HAND BACK</b>
+              </div>
               <div><span>PRINCIPLE</span><b>GROWTH BY DESIGN, NOT BRUTE FORCE</b></div>
             </div>
           </div>

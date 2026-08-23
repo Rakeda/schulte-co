@@ -78,3 +78,22 @@
   color: var(--stone);
   margin-top: 8px;
 }
+.notes {
+  border-top: 2px solid var(--ink);
+  margin-top: 12px;
+}
+.noterow {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  color: var(--ink);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.ncode {
+  font-weight: 600;
+  min-width: 1.5ch;
+}

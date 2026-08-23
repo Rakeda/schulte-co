@@ -49,6 +49,17 @@ export default function FooterLegend() {
                 {row}
               </li>
             ))}
+            <li>
+              <span className={styles.sym}>·</span>
+              <a
+                href="https://en.wikipedia.org/wiki/Tampa,_Florida"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-snap
+              >
+                TAMPA, FLORIDA · 27°57′N 82°27′W
+              </a>
+            </li>
           </ul>
         </div>
         <div>

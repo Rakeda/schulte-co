@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Spine from "@/components/Spine";
 import Baseline from "@/components/Baseline";
 import BracketCursor from "@/components/BracketCursor";
+import InstrumentRail from "@/components/InstrumentRail";
 import Hero from "@/components/sections/Hero";
 import Problem from "@/components/sections/Problem";
 import HiddenCosts from "@/components/sections/HiddenCosts";
@@ -26,6 +27,7 @@ export default function Page() {
       </main>
       <Baseline />
       <BracketCursor />
+      <InstrumentRail />
     </>
   );
 }

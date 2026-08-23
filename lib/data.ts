@@ -26,16 +26,6 @@ export const NAV_ITEMS: NavItem[] = [
   { fig: "07", label: "PARTNERS", href: "#f7", index: 6 },
 ];
 
-export const FIG_NAMES = [
-  "GROWTH BY DESIGN",
-  "THE PROBLEM",
-  "BELOW THE SURFACE",
-  "THE METHOD",
-  "THE FINANCIAL CASE",
-  "AI PHILOSOPHY",
-  "THE PARTNERS",
-];
-
 /** Hero data strip: measured values (ochre) with their labels. */
 export const DATA_STRIP: Array<{ v: number | string; l: string; prefix?: string; suffix?: string }> = [
   { v: 8, l: "STEPS" },

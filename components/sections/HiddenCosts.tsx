@@ -80,6 +80,7 @@ export default function HiddenCosts() {
           </div>
 
           <div className={styles.bergwrap}>
+            <div className="desk-only">
             <svg
               viewBox="0 0 380 340"
               aria-label="Sounding chart of the iceberg: small visible peak, large hatched mass below the waterline"
@@ -127,6 +128,53 @@ export default function HiddenCosts() {
               </g>
               <text x="46" y="334" fontSize="8.5" fill="var(--stone)">SOUNDING: MOST OF THE MASS IS UNDER THE WATERLINE</text>
             </svg>
+            </div>
+
+            {/* field plate: same sounding, redrawn at pocket scale */}
+            <div className="mob-only">
+              <svg
+                viewBox="0 0 360 400"
+                aria-label="Sounding chart of the iceberg at field scale"
+              >
+                <defs>
+                  <pattern id="bergHatchM" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                    <line x1="0" y1="0" x2="0" y2="7" stroke="var(--cobalt)" strokeWidth="1" opacity=".38" />
+                  </pattern>
+                </defs>
+                <line x1="26" y1="112" x2="26" y2="372" stroke="var(--hair)" strokeWidth="1" strokeDasharray="3 4" />
+                {[
+                  [112, "0"],
+                  [198, "−10"],
+                  [284, "−20"],
+                  [370, "−30"],
+                ].map(([y, l]) => (
+                  <g key={l}>
+                    <line x1="20" y1={y} x2="32" y2={y} stroke="var(--stone)" strokeWidth="1" />
+                    <text x="0" y={Number(y) + 4} fontSize="11" fill="var(--stone)">{l}</text>
+                  </g>
+                ))}
+                <text x="46" y="24" fontSize="11" fill="var(--stone)">VISIBLE: MISSED TARGETS,</text>
+                <text x="46" y="40" fontSize="11" fill="var(--stone)">MARGIN PRESSURE, LAYOFFS</text>
+                <path className="scrub" d="M120,112 L172,52 L204,84 L240,112" fill="none" stroke="var(--ink)" strokeWidth="1.3" />
+                <path className="scrub" data-delay=".15" d="M8,112 C60,108 112,116 172,112 C232,108 284,116 352,112" fill="none" stroke="var(--cobalt)" strokeWidth="1.7" />
+                <path
+                  className="scrub"
+                  data-delay=".3"
+                  data-flash="bergFillM"
+                  d="M96,112 L70,186 L90,266 L152,358 L232,326 L276,228 L290,144 L262,112"
+                  fill="none"
+                  stroke="var(--ink)"
+                  strokeWidth="1.3"
+                />
+                <g id="bergFillM" className="hatchin">
+                  <path d="M96,112 L70,186 L90,266 L152,358 L232,326 L276,228 L290,144 L262,112 Z" fill="url(#bergHatchM)" />
+                  <text x="116" y="212" fontSize="13" fill="var(--cobalt)" fontWeight="600">HIDDEN: 9 COSTS</text>
+                  <text x="104" y="232" fontSize="11" fill="var(--cobalt)">TRIBAL KNOWLEDGE · REWORK ·</text>
+                  <text x="104" y="248" fontSize="11" fill="var(--cobalt)">KEY-PERSON DEPENDENCY…</text>
+                </g>
+                <text x="20" y="394" fontSize="11" fill="var(--stone)">SOUNDING: MOST OF THE MASS IS UNDER THE WATERLINE</text>
+              </svg>
+            </div>
           </div>
         </div>
         <p className={`figcap ${styles.cap}`}>

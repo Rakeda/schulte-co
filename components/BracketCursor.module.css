@@ -48,8 +48,3 @@
   border-right-width: 1.5px;
   border-bottom-width: 1.5px;
 }
-@media (pointer: coarse) {
-  .snap {
-    display: none;
-  }
-}
