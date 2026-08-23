@@ -1,0 +1,74 @@
+.f8 {
+  background: var(--npaper);
+  color: var(--nink);
+  margin-left: calc(0px - var(--gutter));
+  padding-left: var(--gutter);
+}
+.kn {
+  font-family: var(--font-display), serif;
+  font-size: clamp(40px, 5vw, 58px);
+  line-height: 1.05;
+  margin: 0 0 14px;
+  color: var(--nink);
+}
+.sub {
+  max-width: 58ch;
+  font-size: 16.5px;
+  color: #c9cec7;
+}
+.roads {
+  width: 100%;
+  height: auto;
+  margin: 24px 0 8px;
+}
+.qgrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--nhair);
+  border: 1px solid var(--nhair);
+  margin-top: 20px;
+  max-width: 900px;
+}
+@media (max-width: 760px) {
+  .qgrid {
+    grid-template-columns: 1fr;
+  }
+}
+.q {
+  background: var(--npaper);
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+.qc {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--noxide);
+}
+.qt {
+  font-size: 13.5px;
+  color: var(--nink);
+}
+.qcap {
+  font-size: 9px;
+  letter-spacing: 0.09em;
+  color: #6f766f;
+  margin: 12px 0 22px;
+  line-height: 1.9;
+  max-width: 900px;
+}
+.nbkt {
+  color: var(--nink);
+}
+.nbkt:hover {
+  color: var(--nverm);
+}
+.frontier {
+  margin-top: 26px;
+}
+.frontier svg {
+  width: 100%;
+  height: auto;
+}

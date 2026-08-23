@@ -1,0 +1,90 @@
+.lede {
+  max-width: 62ch;
+  font-size: 16.5px;
+  margin-bottom: 26px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(26px, 4vw, 60px);
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+.grid svg {
+  width: 100%;
+  height: auto;
+}
+
+/* the worksheet */
+.sheet {
+  border-top: 2px solid var(--ink);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+.srow {
+  display: grid;
+  grid-template-columns: 4.5ch 1fr auto;
+  gap: 12px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.sub1 {
+  border-top: 1px solid var(--ink);
+}
+.sc {
+  color: var(--stone);
+  font-size: 9.5px;
+}
+.sl {
+  color: var(--ink);
+}
+.sv {
+  color: var(--ochre);
+  font-weight: 600;
+  text-align: right;
+}
+.total {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  align-items: baseline;
+  padding: 14px 0 10px;
+  border-top: 3px double var(--ink);
+  border-bottom: 1px solid var(--hair);
+}
+.tlab {
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  font-weight: 600;
+  color: var(--ink);
+}
+.tval {
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 600;
+  color: var(--ochre);
+  letter-spacing: 0.02em;
+}
+.tnote {
+  grid-column: 1 / -1;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--stone);
+}
+.rx {
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--oxide);
+  margin: 10px 0 0;
+}
+.barcap {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--stone);
+  margin-top: 8px;
+}

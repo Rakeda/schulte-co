@@ -1,0 +1,132 @@
+.pgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 3.6vw, 56px);
+}
+@media (max-width: 760px) {
+  .pgrid {
+    grid-template-columns: 1fr;
+  }
+}
+.partner {
+  border-top: 2px solid var(--ink);
+  padding-top: 12px;
+}
+.role {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--oxide);
+}
+.pname {
+  font-weight: 600;
+  font-size: clamp(19px, 2.2vw, 23px);
+  margin: 4px 0 2px;
+}
+.pq {
+  font-size: 14.5px;
+  color: var(--stone);
+  margin: 0 0 10px;
+}
+.prow,
+.wrow {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 14px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.qrow {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 13px;
+  color: var(--ink);
+  padding: 5px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.qmark {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--cobalt);
+  min-width: 1.5ch;
+}
+.sh {
+  font-size: 8.5px;
+  letter-spacing: 0.13em;
+  font-weight: 600;
+  color: var(--stone);
+  margin-top: 12px;
+  padding-bottom: 3px;
+}
+.flow {
+  width: 100%;
+  height: auto;
+  margin-top: 26px;
+}
+.whowrap {
+  margin-top: clamp(34px, 5vw, 54px);
+}
+.gh {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--oxide);
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 5px;
+  margin-bottom: 4px;
+}
+.whogrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: clamp(18px, 2.6vw, 36px);
+}
+@media (max-width: 640px) {
+  .whogrid {
+    grid-template-columns: 1fr;
+  }
+}
+.pe {
+  display: inline-block;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--cobalt);
+  border: 1px solid var(--cobalt);
+  padding: 8px 14px;
+  margin-top: 18px;
+  line-height: 1.8;
+}
+.closegrid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(28px, 4.5vw, 64px);
+  align-items: center;
+  margin-top: clamp(40px, 6vw, 72px);
+}
+@media (max-width: 760px) {
+  .closegrid {
+    grid-template-columns: 1fr;
+  }
+}
+.big {
+  font-size: clamp(40px, 5.2vw, 62px);
+}
+.sub {
+  max-width: 54ch;
+  font-size: 17px;
+  margin-top: 16px;
+}
+.ctas {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.contact {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--stone);
+  margin-top: 18px;
+}

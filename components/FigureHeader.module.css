@@ -1,0 +1,38 @@
+.figH {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--ink);
+  padding-top: 14px;
+  margin-bottom: clamp(22px, 3vw, 34px);
+}
+.no {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--verm);
+}
+.title {
+  font-size: clamp(40px, 4.6vw, 54px);
+}
+.ref {
+  margin-left: auto;
+  font-family: var(--font-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  color: var(--stone);
+}
+.night {
+  border-top-color: var(--nink);
+}
+.night .no {
+  color: var(--nverm);
+}
+.night .title {
+  color: var(--nink);
+}
+.night .ref {
+  color: #6f766f;
+}

@@ -1,0 +1,55 @@
+.snap {
+  position: fixed;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  /* position and size move together so the brackets glide between targets
+     instead of jumping into place while their size lags behind */
+  transition: opacity 0.12s, left 0.16s cubic-bezier(0.83, 0, 0.17, 1),
+    top 0.16s cubic-bezier(0.83, 0, 0.17, 1),
+    width 0.16s cubic-bezier(0.83, 0, 0.17, 1),
+    height 0.16s cubic-bezier(0.83, 0, 0.17, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .snap {
+    transition: opacity 0.12s;
+  }
+}
+.snap.on {
+  opacity: 1;
+}
+.snap i {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 0 solid var(--verm);
+}
+.snap i:nth-child(1) {
+  left: -4px;
+  top: -4px;
+  border-left-width: 1.5px;
+  border-top-width: 1.5px;
+}
+.snap i:nth-child(2) {
+  right: -4px;
+  top: -4px;
+  border-right-width: 1.5px;
+  border-top-width: 1.5px;
+}
+.snap i:nth-child(3) {
+  left: -4px;
+  bottom: -4px;
+  border-left-width: 1.5px;
+  border-bottom-width: 1.5px;
+}
+.snap i:nth-child(4) {
+  right: -4px;
+  bottom: -4px;
+  border-right-width: 1.5px;
+  border-bottom-width: 1.5px;
+}
+@media (pointer: coarse) {
+  .snap {
+    display: none;
+  }
+}

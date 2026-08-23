@@ -1,0 +1,239 @@
+/* ================= TOKENS — the locked Gallery Proof world ================= */
+:root {
+  --paper: #f7f7f3;
+  --ink: #131417;
+  --verm: #d93a1f;
+  --oxide: #2e4b3f;
+  --stone: #84867e;
+  --hair: #e4e4dd;
+  /* additional surveyor's inks — each with one meaning:
+     cobalt = annotations, links, wayfinding (the drafting blue)
+     ochre  = measured values: plate numbers, statistics, index figures */
+  --cobalt: #2f4fa2;
+  --ochre: #9c6f22;
+  --npaper: #101211;
+  --nink: #edeee9;
+  --nverm: #f0492a;
+  --noxide: #5f8a76;
+  --nhair: #2a2d2b;
+  --gutter: 76px;
+  --header-h: 54px;
+  /* cap for the sheet-edge strips (header + baseline) on ultra-wide screens:
+     wider than the content column so they stay a frame, never a nav bar */
+  --strip-max: 1640px;
+}
+
+/* ================= BASE ================= */
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 72px; /* room for the Baseline */
+}
+@media (pointer: fine) {
+  body {
+    cursor: crosshair;
+  }
+}
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+p {
+  margin: 0 0 1em;
+}
+a {
+  color: var(--cobalt);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+a:hover {
+  text-decoration-thickness: 2.5px;
+}
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+svg {
+  display: block;
+}
+svg text {
+  font-family: var(--font-mono), monospace;
+}
+
+/* ================= SHARED UTILITIES ================= */
+.mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+.stone {
+  color: var(--stone);
+}
+.oxide {
+  color: var(--oxide);
+}
+.bkt {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.bkt:hover {
+  color: var(--verm);
+  text-decoration: none;
+}
+.figcap {
+  font-family: var(--font-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
+  color: var(--stone);
+}
+.inwrap {
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: clamp(18px, 3.4vw, 44px);
+}
+.fig {
+  padding-block: clamp(64px, 9vw, 120px);
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+
+/* main survey sheet: gutter reserved for the traverse spine */
+main.survey {
+  position: relative;
+  padding-left: var(--gutter);
+}
+@media (max-width: 760px) {
+  :root {
+    --gutter: 0px;
+  }
+  main.survey {
+    padding-left: 0;
+  }
+}
+
+/* ================= ARRIVALS (armed by useReveal) ================= */
+.js-anim .wipe {
+  clip-path: inset(0 0 102% 0);
+  transform: translateY(10px);
+}
+.js-anim .wipe.in {
+  animation: wipeIn 0.55s cubic-bezier(0.83, 0, 0.17, 1) forwards;
+  animation-delay: var(--d, 0s);
+}
+@keyframes wipeIn {
+  to {
+    clip-path: inset(0 0 -6% 0);
+    transform: none;
+  }
+}
+.js-anim .rowin {
+  clip-path: inset(0 100% 0 0);
+}
+.js-anim .rowin.in {
+  animation: rowIn 0.45s cubic-bezier(0.83, 0, 0.17, 1) forwards;
+  animation-delay: var(--d, 0s);
+}
+@keyframes rowIn {
+  to {
+    clip-path: inset(0 -2% 0 0);
+  }
+}
+
+/* ================= FLASHES (fired by useScrub on figure completion) ================= */
+.flashfill {
+  fill: var(--verm);
+  fill-opacity: 0;
+}
+.flashfill.flashed {
+  animation: flashFill 0.5s linear both;
+}
+@keyframes flashFill {
+  0% {
+    fill-opacity: 0;
+  }
+  35% {
+    fill-opacity: 0.9;
+  }
+  100% {
+    fill-opacity: 0;
+  }
+}
+.flashkeep {
+  fill: var(--verm);
+  fill-opacity: 0;
+}
+.flashkeep.flashed {
+  animation: flashKeep 0.6s linear both;
+}
+@keyframes flashKeep {
+  0% {
+    fill-opacity: 0;
+  }
+  40% {
+    fill-opacity: 1;
+  }
+  100% {
+    fill-opacity: 1;
+  }
+}
+
+/* hatch/area reveals — fired like flashes, by a scrub completing */
+.hatchin {
+  opacity: 0;
+}
+.hatchin.flashed {
+  animation: hatchIn 0.7s ease both;
+}
+@keyframes hatchIn {
+  to {
+    opacity: 1;
+  }
+}
+.counter {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-anim .wipe,
+  .js-anim .rowin {
+    clip-path: none;
+    transform: none;
+    animation: none;
+  }
+  .flashfill.flashed {
+    animation: none;
+  }
+  .flashkeep.flashed {
+    animation: none;
+    fill-opacity: 1;
+  }
+  .hatchin {
+    opacity: 1;
+  }
+  .hatchin.flashed {
+    animation: none;
+  }
+}

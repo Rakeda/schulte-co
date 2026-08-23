@@ -1,0 +1,117 @@
+.intro {
+  max-width: 62ch;
+  margin-bottom: 16px;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  align-items: center;
+  margin-bottom: 26px;
+}
+.chiplab {
+  font-size: 9px;
+  letter-spacing: 0.11em;
+  color: var(--stone);
+}
+.chip {
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  color: var(--cobalt);
+  border: 1px solid var(--cobalt);
+  padding: 3px 8px;
+}
+
+/* SCHEDULE A — dense ruled rows, one rail drawing down the left */
+.sched {
+  position: relative;
+  border-top: 2px solid var(--ink);
+}
+.rail {
+  position: absolute;
+  left: 12px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  height: 100%;
+  pointer-events: none;
+}
+.phead {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--oxide);
+  padding: 12px 0 6px 44px;
+  border-bottom: 1px solid var(--ink);
+}
+.row {
+  display: grid;
+  grid-template-columns: 44px 168px 1fr 232px;
+  gap: 0 16px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.nodecol {
+  align-self: center;
+  justify-self: start;
+  background: var(--paper);
+}
+.name {
+  font-weight: 600;
+  font-size: 16.5px;
+  letter-spacing: 0.01em;
+}
+.gatename {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--cobalt);
+}
+.gate {
+  background: color-mix(in srgb, var(--cobalt) 4%, transparent);
+}
+.gate .desc {
+  color: var(--cobalt);
+  font-weight: 500;
+}
+.desc {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.note {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--stone);
+}
+.out {
+  font-size: 9.5px;
+  letter-spacing: 0.07em;
+  color: var(--ochre);
+  text-align: right;
+}
+.gate .out {
+  color: var(--cobalt);
+}
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: 44px 1fr;
+    row-gap: 3px;
+  }
+  .name {
+    grid-column: 2;
+  }
+  .desc {
+    grid-column: 2;
+  }
+  .out {
+    grid-column: 2;
+    text-align: left;
+  }
+  .nodecol {
+    grid-row: 1 / span 3;
+  }
+}
+.cap {
+  margin-top: 18px;
+}

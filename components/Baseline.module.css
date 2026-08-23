@@ -1,0 +1,109 @@
+/* full-bleed strip: background + top rule span the viewport (the sheet's bottom edge) */
+.baseline {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  height: 44px;
+  background: var(--paper);
+  border-top: 1px solid var(--ink);
+}
+
+/* the instrument caps at --strip-max, mirroring the header */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+  max-width: var(--strip-max);
+  margin-inline: auto;
+  padding: 0 clamp(14px, 2.6vw, 32px);
+}
+.lab {
+  font-family: var(--font-mono), monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  white-space: nowrap;
+  min-width: 21ch;
+}
+.track {
+  position: relative;
+  flex: 1;
+  height: 100%;
+}
+.line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--ink);
+}
+.tick {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-7px, -7px);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.tick::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 1px;
+  height: 10px;
+  background: var(--ink);
+}
+.tick:hover::after {
+  background: var(--verm);
+}
+.tt {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono), monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  color: var(--stone);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  background: var(--paper);
+  padding: 1px 5px;
+  border: 1px solid var(--hair);
+}
+.tick:hover .tt,
+.tick:focus-visible .tt {
+  opacity: 1;
+}
+.nib {
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  background: var(--verm);
+  transform: translate(-3px, -3px);
+  pointer-events: none;
+}
+.end {
+  font-family: var(--font-mono), monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--stone);
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .lab,
+  .end {
+    display: none;
+  }
+}
