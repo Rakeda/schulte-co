@@ -134,8 +134,8 @@ main.survey {
 }
 @media (max-width: 760px) {
   :root {
-    /* the field edition keeps its datum line: a narrow edge gutter */
-    --gutter: 20px;
+    /* no gutter instrument on the field edition */
+    --gutter: 0px;
   }
 }
 

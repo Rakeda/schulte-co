@@ -5,23 +5,19 @@ import { prefersReducedMotion, useResizeVersion, useScrollFrame } from "@/lib/mo
 import { FIGURES } from "@/lib/figures";
 import styles from "./Spine.module.css";
 
-/** Deterministic pseudo-random for the mobile edge datum's gentle wander. */
-function pr(i: number): number {
-  return Math.abs((((Math.sin(i * 12.9898) * 43758.5453) % 1) + 1) % 1);
-}
-
 /*
- * THE STAIR (desktop): a switchback stair tower in the gutter, drawn in
+ * THE STAIR (desktop only): a switchback stair tower in the gutter, drawn in
  * 2:1 dimetric with FIXED, honest step proportions — 15px tread run,
  * 12px riser, 14px breadth. Section height is absorbed by MORE steps and
  * turns, never by stretching a step. The whole descent pre-exists as a
- * dashed stone PROPOSAL; scroll sweeps a survey front down the sheet
+ * dashed ochre PROPOSAL; scroll sweeps a survey front down the sheet
  * converting it to inked RECORD via one growing clip rect. A vermilion
  * tread-mark walks the nosings. Landings sit at each figure datum.
  * Identity pixel mapping: dimetric geometry never goes near
  * preserveAspectRatio="none".
  *
- * Mobile keeps the simple edge datum line.
+ * On the field edition (<=760px) the gutter carries no instrument at all —
+ * the component renders nothing and the content takes the full width.
  */
 
 const GUT = 92;
@@ -38,26 +34,15 @@ const PITCH = S + RISE;
 
 type Numeral = { x: number; y: number; no: string; yAt: number };
 
-type Built =
-  | {
-      mode: "stair";
-      H: number;
-      stairD: string;
-      landingsD: string;
-      nosings: number[][]; // [ax, ay, bx, by]
-      numerals: Numeral[];
-    }
-  | {
-      mode: "line";
-      H: number;
-      pathD: string;
-      ticks: { y: number; frac: number }[];
-    };
+type Built = {
+  H: number;
+  stairD: string;
+  landingsD: string;
+  nosings: number[][]; // [ax, ay, bx, by]
+  numerals: Numeral[];
+};
 
-function buildStair(
-  marks: { y: number; no: string }[],
-  H: number
-): Extract<Built, { mode: "stair" }> {
+function buildStair(marks: { y: number; no: string }[], H: number): Built {
   let stairD = "";
   let landingsD = "";
   const nosings: number[][] = [];
@@ -109,103 +94,47 @@ function buildStair(
   }
   descendTo(H - 36);
 
-  return { mode: "stair", H, stairD, landingsD, nosings, numerals };
-}
-
-function buildLine(
-  H: number,
-  sections: HTMLElement[],
-  span: number
-): Extract<Built, { mode: "line" }> {
-  let d = "M 38,0";
-  let y = 0;
-  let i = 0;
-  while (y < H) {
-    const step = 340 + pr(i) * 260;
-    const y2 = Math.min(y + step, H);
-    const x2 = 20 + pr(i + 7) * 36;
-    d += ` C 38,${y + step * 0.4} ${x2},${y + step * 0.6} ${x2},${y2}`;
-    y = y2;
-    i++;
-  }
-  return {
-    mode: "line",
-    H,
-    pathD: d,
-    ticks: sections.map((sec) => ({
-      y: sec.offsetTop,
-      frac: span > 0 ? Math.min(sec.offsetTop / span, 1) : 0,
-    })),
-  };
+  return { H, stairD, landingsD, nosings, numerals };
 }
 
 export default function Spine() {
   const svgRef = useRef<SVGSVGElement>(null);
-  const linePathRef = useRef<SVGPathElement>(null);
-  const lineLenRef = useRef(0);
   const clipRectRef = useRef<SVGRectElement>(null);
   const markRef = useRef<SVGPathElement>(null);
   const numGroupRef = useRef<SVGGElement>(null);
-  const tickGroupRef = useRef<SVGGElement>(null);
   const stepIdxRef = useRef(-1);
   const builtRef = useRef<Built | null>(null);
   const [built, setBuilt] = useState<Built | null>(null);
   const version = useResizeVersion();
 
   useEffect(() => {
+    if (window.innerWidth <= 760) {
+      builtRef.current = null;
+      setBuilt(null);
+      return;
+    }
     const svg = svgRef.current;
-    if (!svg) return;
-    const H = svg.parentElement?.scrollHeight ?? document.body.scrollHeight;
+    const H =
+      svg?.parentElement?.scrollHeight ?? document.body.scrollHeight;
     const sections = Array.from(
       document.querySelectorAll<HTMLElement>("section[data-fig]")
     );
-    const span = H - window.innerHeight;
-    const isMobile = window.innerWidth <= 760;
-    const next: Built = isMobile
-      ? buildLine(H, sections, span)
-      : buildStair(
-          sections.map((sec, i) => ({
-            y: Math.max(sec.offsetTop, 80),
-            no: FIGURES[i]?.figNo ?? "",
-          })),
-          H
-        );
+    const next = buildStair(
+      sections.map((sec, i) => ({
+        y: Math.max(sec.offsetTop, 80),
+        no: FIGURES[i]?.figNo ?? "",
+      })),
+      H
+    );
     builtRef.current = next;
     stepIdxRef.current = -1;
     setBuilt(next);
   }, [version]);
 
-  useEffect(() => {
-    if (!built || built.mode !== "line") return;
-    const path = linePathRef.current;
-    if (!path) return;
-    const len = path.getTotalLength();
-    lineLenRef.current = len;
-    path.style.strokeDasharray = `${len} ${len}`;
-    if (prefersReducedMotion()) path.style.strokeDashoffset = "0";
-  }, [built]);
-
   useScrollFrame(({ y, vh, gp }) => {
     const b = builtRef.current;
     if (!b) return;
     const rm = prefersReducedMotion();
-
-    if (b.mode === "line") {
-      const path = linePathRef.current;
-      const len = lineLenRef.current;
-      if (path && len) {
-        path.style.strokeDashoffset = rm ? "0" : String(len * (1 - gp));
-      }
-      const g = tickGroupRef.current;
-      if (g) {
-        for (let i = 0; i < g.children.length; i++) {
-          const el = g.children[i] as SVGElement;
-          const frac = parseFloat(el.dataset.frac ?? "0");
-          el.style.opacity = gp + 0.002 >= frac ? "1" : "0.35";
-        }
-      }
-      return;
-    }
 
     // the survey front
     let F = Math.min(Math.max(y + vh * 0.38, 0), b.H);
@@ -244,42 +173,6 @@ export default function Spine() {
 
   if (!built) {
     return <svg ref={svgRef} className={styles.spine} aria-hidden="true" />;
-  }
-
-  if (built.mode === "line") {
-    return (
-      <svg
-        ref={svgRef}
-        className={styles.spine}
-        viewBox={`0 0 76 ${built.H}`}
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          ref={linePathRef}
-          d={built.pathD}
-          className={styles.path}
-          fill="none"
-          vectorEffect="non-scaling-stroke"
-        />
-        <g ref={tickGroupRef}>
-          {built.ticks.map((t) => (
-            <line
-              key={t.y}
-              data-frac={t.frac}
-              style={{ opacity: 0.35 }}
-              x1="44"
-              y1={t.y}
-              x2="60"
-              y2={t.y}
-              stroke="var(--ink)"
-              strokeWidth="1"
-              vectorEffect="non-scaling-stroke"
-            />
-          ))}
-        </g>
-      </svg>
-    );
   }
 
   return (

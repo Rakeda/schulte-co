@@ -7,9 +7,10 @@
   pointer-events: none;
   z-index: 0;
 }
-.path {
-  stroke: var(--ink);
-  stroke-width: 1.3;
+@media (max-width: 760px) {
+  .spine {
+    display: none;
+  }
 }
 
 /* the proposal: the descent ahead, dashed in ochre at 70% */
