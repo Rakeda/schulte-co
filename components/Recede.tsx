@@ -5,50 +5,48 @@ import { prefersReducedMotion, useResizeVersion, useScrollFrame } from "@/lib/mo
 
 /*
  * THE LIFT: when a sheet has been read and the next one has taken the board,
- * the finished sheet is lifted off. Departure is scrubbed 1:1 with scroll,
- * exactly like every other instrument on the page: as a section's bottom
- * edge rises through the band between 38% and 8% of the viewport it drifts
- * up and fades out; scrolling back down through the same band replays the
- * motion in reverse and files the sheet back onto the board. No direction
- * flags, no timers — position is the whole state.
+ * the finished sheet is taken off. Crossing the departure line plays a
+ * composed exit (fade, upward drift, bottom-up erase — the arrival wipe run
+ * in reverse), timed in CSS so it reads at any scroll speed. Scrolling back
+ * up across the return line files the sheet back onto the board with the
+ * same motion reversed. The two lines are offset (hysteresis) so the state
+ * never chatters at the boundary. Styles live on `.lifted` in globals.css.
+ *
+ * Positions come from the offset chain, not bounding rects: the lift's own
+ * translate must never move the thresholds it is measured against.
  */
 
-const BAND_START = 0.38; // departure begins when the bottom crosses this vh line
-const BAND_END = 0.08; // fully lifted here
+const DOWN = 0.32; // lift when the sheet's bottom rises past this vh line
+const UP = 0.44; // file it back when the bottom drops below this one
+
+type Sheet = { el: HTMLElement; bottom: number };
+
+function docTop(el: HTMLElement): number {
+  let y = 0;
+  for (let n: HTMLElement | null = el; n; n = n.offsetParent as HTMLElement | null) {
+    y += n.offsetTop;
+  }
+  return y;
+}
 
 export default function Recede() {
-  const secsRef = useRef<HTMLElement[]>([]);
-  const lastRef = useRef<number[]>([]);
+  const sheetsRef = useRef<Sheet[]>([]);
   const version = useResizeVersion();
 
   useEffect(() => {
-    if (prefersReducedMotion()) {
-      secsRef.current = [];
-      return;
-    }
-    secsRef.current = Array.from(
-      document.querySelectorAll<HTMLElement>("section[data-fig]")
-    );
-    lastRef.current = secsRef.current.map(() => -1);
+    sheetsRef.current = prefersReducedMotion()
+      ? []
+      : Array.from(
+          document.querySelectorAll<HTMLElement>("section[data-fig]")
+        ).map((el) => ({ el, bottom: docTop(el) + el.offsetHeight }));
   }, [version]);
 
-  useScrollFrame(({ vh }) => {
-    const secs = secsRef.current;
-    const last = lastRef.current;
-    for (let i = 0; i < secs.length; i++) {
-      const r = secs[i].getBoundingClientRect();
-      let p = (vh * BAND_START - r.bottom) / (vh * (BAND_START - BAND_END));
-      p = Math.min(Math.max(p, 0), 1);
-      if (p === last[i]) continue;
-      last[i] = p;
-      const st = secs[i].style;
-      if (p === 0) {
-        st.opacity = "";
-        st.transform = "";
-      } else {
-        st.opacity = (1 - p).toFixed(3);
-        st.transform = `translateY(${(-30 * p).toFixed(1)}px)`;
-      }
+  useScrollFrame(({ y, vh }) => {
+    for (const s of sheetsRef.current) {
+      const b = s.bottom - y; // layout position in the viewport
+      const lifted = s.el.classList.contains("lifted");
+      if (!lifted && b < vh * DOWN) s.el.classList.add("lifted");
+      else if (lifted && b > vh * UP) s.el.classList.remove("lifted");
     }
   });
 

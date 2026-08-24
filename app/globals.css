@@ -157,6 +157,23 @@ main.survey {
   outline: none;
 }
 
+/* ================= THE LIFT (driven by Recede) =================
+   A finished sheet is taken off the board: it fades, drifts up, and is
+   erased bottom-to-top — the arrival wipe run in reverse. Removing the
+   class plays the same motion backwards, filing the sheet back in. */
+.js-anim section[data-fig] {
+  clip-path: inset(0 0 0 0);
+  transition:
+    opacity 0.55s cubic-bezier(0.83, 0, 0.17, 1),
+    transform 0.65s cubic-bezier(0.83, 0, 0.17, 1),
+    clip-path 0.65s cubic-bezier(0.83, 0, 0.17, 1);
+}
+.js-anim section[data-fig].lifted {
+  opacity: 0;
+  transform: translateY(-48px);
+  clip-path: inset(0 0 26% 0);
+}
+
 /* ================= ARRIVALS (armed by useReveal) ================= */
 .js-anim .wipe {
   clip-path: inset(0 0 102% 0);
