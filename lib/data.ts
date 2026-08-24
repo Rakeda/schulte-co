@@ -17,13 +17,30 @@ export const CONTACT = {
 /** Header navigator: curated figures, keyed by section index (0 = FIG. 01). */
 export type NavItem = { fig: string; label: string; href: string; index: number };
 
+/* The header navigates between drawing sets; each page carries its own
+   index of figures at the top of the sheet (see SECTION_LINKS_*). */
 export const NAV_ITEMS: NavItem[] = [
-  { fig: "02", label: "PROBLEM", href: "#f2", index: 1 },
-  { fig: "03", label: "COSTS", href: "#f3", index: 2 },
-  { fig: "04", label: "METHOD", href: "#f4", index: 3 },
-  { fig: "05", label: "VALUE", href: "#f5", index: 4 },
-  { fig: "06", label: "AI", href: "#f6", index: 5 },
-  { fig: "07", label: "PARTNERS", href: "#f7", index: 6 },
+  { fig: "A.", label: "LANDING", href: "/", index: -2 },
+  { fig: "B.", label: "AI PLANNING", href: "/ai", index: -1 },
+];
+
+export type SectionLink = { fig: string; label: string; href: string };
+
+export const SECTION_LINKS_HOME: SectionLink[] = [
+  { fig: "02", label: "PROBLEM", href: "#f2" },
+  { fig: "03", label: "COSTS", href: "#f3" },
+  { fig: "04", label: "METHOD", href: "#f4" },
+  { fig: "05", label: "VALUE", href: "#f5" },
+  { fig: "06", label: "AI", href: "#f6" },
+  { fig: "07", label: "PARTNERS", href: "#f7" },
+];
+
+export const SECTION_LINKS_AI: SectionLink[] = [
+  { fig: "B2", label: "THE TOOL PILE", href: "#b2" },
+  { fig: "B3", label: "FUNCTION SURVEY", href: "#b3" },
+  { fig: "B4", label: "ANATOMY", href: "#b4" },
+  { fig: "B5", label: "ROADMAP", href: "#b5" },
+  { fig: "B6", label: "OWNERSHIP", href: "#b6" },
 ];
 
 /** Hero data strip: measured values (ochre) with their labels. */

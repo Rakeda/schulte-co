@@ -122,7 +122,7 @@ export default function Spine() {
     const next = buildStair(
       sections.map((sec, i) => ({
         y: Math.max(sec.offsetTop, 80),
-        no: FIGURES[i]?.figNo ?? "",
+        no: sec.dataset.figno ?? FIGURES[i]?.figNo ?? "",
       })),
       H
     );

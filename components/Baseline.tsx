@@ -5,7 +5,15 @@ import { prefersReducedMotion, useResizeVersion, useScrollFrame } from "@/lib/mo
 import { FIGURES } from "@/lib/figures";
 import styles from "./Baseline.module.css";
 
-type Tick = { id: string; left: number; index: number };
+type Tick = { id: string; left: number; index: number; figNo: string; title: string };
+
+/* sheet metadata: the section's own data attributes win; the home manifest backs them */
+function figOf(sec: HTMLElement, i: number): { figNo: string; title: string } {
+  return {
+    figNo: sec.dataset.figno ?? FIGURES[i]?.figNo ?? String(i + 1),
+    title: sec.dataset.title ?? FIGURES[i]?.title ?? "",
+  };
+}
 
 /**
  * The Baseline: the signature strip map. One tick per figure with a
@@ -30,6 +38,7 @@ export default function Baseline() {
         id: sec.id,
         index: i,
         left: span > 0 ? Math.min((sec.offsetTop / span) * 100, 100) : 0,
+        ...figOf(sec, i),
       }))
     );
   }, [version]);
@@ -42,8 +51,11 @@ export default function Baseline() {
       if (sections[j].offsetTop - vh * 0.45 <= y) cur = j;
     }
     if (labRef.current) {
-      const f = FIGURES[cur];
-      labRef.current.textContent = f ? `FIG. ${f.figNo} · ${f.title}` : "";
+      const sec = sections[cur];
+      if (sec) {
+        const f = figOf(sec, cur);
+        labRef.current.textContent = `FIG. ${f.figNo} · ${f.title}`;
+      }
     }
   });
 
@@ -61,23 +73,20 @@ export default function Baseline() {
         </span>
         <div className={styles.track}>
           <div className={styles.line} />
-          {ticks.map((t) => {
-            const f = FIGURES[t.index];
-            return (
-              <button
-                key={t.id}
-                type="button"
-                className={styles.tick}
-                style={{ left: `${t.left}%` }}
-                aria-label={`Go to FIG. ${f?.figNo} · ${f?.title}`}
-                onClick={() => goTo(t.index)}
-              >
-                <span className={styles.tt}>
-                  FIG {f?.figNo} · {f?.title}
-                </span>
-              </button>
-            );
-          })}
+          {ticks.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              className={styles.tick}
+              style={{ left: `${t.left}%` }}
+              aria-label={`Go to FIG. ${t.figNo} · ${t.title}`}
+              onClick={() => goTo(t.index)}
+            >
+              <span className={styles.tt}>
+                FIG {t.figNo} · {t.title}
+              </span>
+            </button>
+          ))}
           <div ref={nibRef} className={styles.nib} />
         </div>
         <span className={styles.end}>END OF SURVEY →</span>

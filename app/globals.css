@@ -157,6 +157,44 @@ main.survey {
   outline: none;
 }
 
+/* ================= INDEX OF FIGURES (top of each sheet) ================= */
+.figindex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 22px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--hair);
+  padding: 10px 0;
+  margin: 18px 0 30px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+.fxlabel {
+  color: var(--stone);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+}
+.fxlink {
+  position: relative;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.fxlink::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+}
+.fxlink:hover {
+  color: var(--verm);
+  text-decoration: none;
+}
+.fxno {
+  color: var(--ochre);
+  font-weight: 600;
+}
+
 /* ================= THE LIFT (driven by Recede) =================
    A finished sheet is taken off the board: it fades, drifts up, and is
    erased bottom-to-top — the arrival wipe run in reverse. Removing the

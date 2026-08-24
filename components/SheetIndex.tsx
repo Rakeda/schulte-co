@@ -4,13 +4,15 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { prefersReducedMotion } from "@/lib/motion";
 import { CONTACT } from "@/lib/data";
-import { FIGURES } from "@/lib/figures";
+import { FIGURES, Figure } from "@/lib/figures";
 import styles from "./SheetIndex.module.css";
 
 type Props = {
   open: boolean;
   activeIndex: number;
   onClose: () => void;
+  /** sheet list override for pages outside the home manifest */
+  rows?: Figure[];
 };
 
 /**
@@ -19,7 +21,8 @@ type Props = {
  * the sixty-second read of the whole survey. The current figure carries
  * the plate's only vermilion mark.
  */
-export default function SheetIndex({ open, activeIndex, onClose }: Props) {
+export default function SheetIndex({ open, activeIndex, onClose, rows }: Props) {
+  const sheets = rows ?? FIGURES;
   const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -51,7 +54,9 @@ export default function SheetIndex({ open, activeIndex, onClose }: Props) {
   return createPortal(
     <div className={styles.plate} role="dialog" aria-modal="true" aria-label="Sheet index">
       <div className={styles.head}>
-        <span className={`${styles.ht} mono`}>SHEET INDEX · SEVEN FIGURES</span>
+        <span className={`${styles.ht} mono`}>
+          SHEET INDEX · {String(sheets.length).padStart(2, "0")} FIGURES
+        </span>
         <button
           ref={closeRef}
           type="button"
@@ -62,7 +67,7 @@ export default function SheetIndex({ open, activeIndex, onClose }: Props) {
         </button>
       </div>
       <div className={styles.rows}>
-        {FIGURES.map((f, i) => (
+        {sheets.map((f, i) => (
           <button
             key={f.id}
             type="button"

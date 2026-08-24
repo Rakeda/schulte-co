@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { prefersReducedMotion, useScrollFrame } from "@/lib/motion";
 import { CONTACT, NAV_ITEMS } from "@/lib/data";
-import { FIGURES } from "@/lib/figures";
+import { FIGURES, Figure } from "@/lib/figures";
 import SheetIndex from "@/components/SheetIndex";
 import styles from "./Header.module.css";
 
@@ -33,13 +34,26 @@ export default function Header() {
   const activeRef = useRef(0);
   const [active, setActive] = useState(0);
   const [indexOpen, setIndexOpen] = useState(false);
+  const [rows, setRows] = useState<Figure[]>(FIGURES);
   const stationRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
+  const onHome = pathname === "/";
 
   useEffect(() => {
-    sectionsRef.current = Array.from(
+    const sections = Array.from(
       document.querySelectorAll<HTMLElement>("section[data-fig]")
     );
-  }, []);
+    sectionsRef.current = sections;
+    /* pages outside the home manifest carry their sheet data on the DOM */
+    setRows(
+      sections.map((sec, i) => ({
+        id: sec.id,
+        figNo: sec.dataset.figno ?? FIGURES[i]?.figNo ?? String(i + 1),
+        title: sec.dataset.title ?? FIGURES[i]?.title ?? "",
+        keyDatum: sec.dataset.datum ?? FIGURES[i]?.keyDatum ?? "",
+      }))
+    );
+  }, [pathname]);
 
   useScrollFrame(({ y, vh, gp }) => {
     gpRef.current = gp;
@@ -85,29 +99,35 @@ export default function Header() {
   return (
     <header className={styles.hdr}>
       <div className={styles.row}>
-        <a className={styles.wm} href="#f1">
+        <a className={styles.wm} href="/#f1">
           Schulte &amp; Co.
         </a>
-        <nav className={styles.nav} aria-label="Survey figures">
-          {NAV_ITEMS.map((item, i) => (
-            <a
-              key={item.href}
-              href={item.href}
-              data-snap
-              aria-current={active === item.index ? "true" : undefined}
-              className={[
-                styles.navlink,
-                styles[`n${i + 1}`],
-                active === item.index ? styles.on : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-              style={{ "--d": `${0.14 + i * 0.07}s` } as React.CSSProperties}
-            >
-              <span className={styles.fig}>{item.fig}</span>
-              {item.label}
-            </a>
-          ))}
+        <nav className={styles.nav} aria-label="Drawing sheets">
+          {NAV_ITEMS.map((item, i) => {
+            const current =
+              item.href === "/"
+                ? onHome
+                : pathname?.startsWith(item.href) ?? false;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                data-snap
+                aria-current={current ? "true" : undefined}
+                className={[
+                  styles.navlink,
+                  styles[`n${i + 1}`],
+                  current ? styles.on : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                style={{ "--d": `${0.14 + i * 0.07}s` } as React.CSSProperties}
+              >
+                <span className={styles.fig}>{item.fig}</span>
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
         <button
           ref={stationRef}
@@ -117,7 +137,8 @@ export default function Header() {
           aria-label="Open the sheet index"
           onClick={() => setIndexOpen(true)}
         >
-          FIG {FIGURES[active]?.figNo ?? "01"} / 07
+          FIG {rows[active]?.figNo ?? "01"} /{" "}
+          {String(rows.length || 7).padStart(2, "0")}
         </button>
         <span className={styles.sp} />
         <a
@@ -137,6 +158,7 @@ export default function Header() {
       <span className={styles.rule} aria-hidden="true" />
       <SheetIndex
         open={indexOpen}
+        rows={rows}
         activeIndex={active}
         onClose={() => {
           setIndexOpen(false);

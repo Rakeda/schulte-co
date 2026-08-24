@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { prefersReducedMotion } from "@/lib/motion";
-import { FIGURES } from "@/lib/figures";
 
 /**
  * The instrument rail: keyboard travel between figure datums.
@@ -24,9 +23,9 @@ export default function InstrumentRail() {
       ) {
         return;
       }
-      const secs = FIGURES.map((f) => document.getElementById(f.id)).filter(
-        Boolean
-      ) as HTMLElement[];
+      const secs = Array.from(
+        document.querySelectorAll<HTMLElement>("section[data-fig]")
+      );
       if (!secs.length) return;
       const behavior: ScrollBehavior = prefersReducedMotion()
         ? "auto"
@@ -47,7 +46,7 @@ export default function InstrumentRail() {
       } else if (e.key === "k" || e.key === "K") {
         go(cur - 1);
         e.preventDefault();
-      } else if (/^[1-7]$/.test(e.key)) {
+      } else if (/^[1-9]$/.test(e.key)) {
         go(parseInt(e.key, 10) - 1);
         e.preventDefault();
       } else if (e.key === "Home") {

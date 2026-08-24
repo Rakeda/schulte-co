@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { prefersReducedMotion, useReveal } from "@/lib/motion";
 import { CONTACT, DATA_STRIP, ENTRY_POINTS } from "@/lib/data";
 import Counter from "@/components/Counter";
+import FigIndex from "@/components/FigIndex";
+import { SECTION_LINKS_HOME } from "@/lib/data";
 import styles from "./Hero.module.css";
 
 /**
@@ -64,6 +66,7 @@ export default function Hero() {
           SCHULTE &amp; CO. · STRUCTURAL SURVEY OF A GROWING BUSINESS ·
           BUSINESS ARCHITECTURE &amp; TRANSFORMATION
         </p>
+        <FigIndex items={SECTION_LINKS_HOME} />
         <div className={styles.grid}>
           <div>
             <h1 className={`${styles.h1} wipe`} style={{ "--d": ".15s" } as React.CSSProperties}>

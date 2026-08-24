@@ -1,0 +1,547 @@
+/* ============ Schedule B · shared plate styles ============ */
+
+/* ---- B1 hero ---- */
+.hero {
+  padding-top: clamp(84px, 12vw, 150px);
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--stone);
+  margin-bottom: 22px;
+}
+.h1 {
+  font-size: clamp(44px, 6vw, 88px);
+  margin-bottom: 26px;
+}
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: clamp(26px, 4vw, 64px);
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+}
+.heroGrid svg {
+  width: 100%;
+  height: auto;
+}
+.lede {
+  max-width: 58ch;
+  font-size: 16.5px;
+  margin-bottom: 14px;
+}
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 0;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--hair);
+  margin-top: 26px;
+  padding: 10px 0;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+}
+.stripItem {
+  color: var(--ochre);
+  font-weight: 600;
+}
+.stripDot {
+  color: var(--stone);
+  padding: 0 10px;
+}
+.platecap {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--stone);
+  margin-top: 8px;
+}
+
+/* ---- shared ledgers ---- */
+.grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: clamp(26px, 4vw, 60px);
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+.grid svg {
+  width: 100%;
+  height: auto;
+}
+.lh {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--oxide);
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 5px;
+  margin-bottom: 4px;
+}
+.lhRed {
+  color: var(--verm);
+}
+.li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 14px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.liname {
+  flex: 1;
+}
+.code {
+  font-size: 9.5px;
+  color: var(--stone);
+  min-width: 4ch;
+}
+.codeRed {
+  color: var(--verm);
+}
+.tag {
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  color: var(--ochre);
+}
+.lnote {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--stone);
+  margin: 10px 0 0;
+}
+.crossref {
+  margin-top: 26px;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--stone);
+}
+.crossref a {
+  font-family: var(--font-mono), monospace;
+}
+
+/* field-plate notes ledger (mirrors the landing page's FIG. 02 notes) */
+.notes {
+  border-top: 2px solid var(--ink);
+  margin-top: 12px;
+}
+.noterow {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  color: var(--ink);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.ncode {
+  font-weight: 600;
+  min-width: 1.5ch;
+}
+
+/* ---- B3 survey plate ---- */
+.wideplate {
+  margin-top: 8px;
+}
+.wideplate svg {
+  width: 100%;
+  height: auto;
+}
+.candStrip {
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--hair);
+  margin-top: 18px;
+  padding: 10px 0;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  color: var(--ink);
+}
+.chairs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(18px, 3vw, 44px);
+  margin-top: 26px;
+}
+@media (max-width: 640px) {
+  .chairs {
+    grid-template-columns: 1fr;
+  }
+}
+.chair {
+  border-top: 1px solid var(--ink);
+  padding-top: 10px;
+}
+.chairWho {
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  font-weight: 600;
+  color: var(--cobalt);
+  margin-bottom: 6px;
+}
+.chairWhat {
+  font-size: 14.5px;
+  max-width: 44ch;
+}
+
+/* mobile survey rows */
+.mFn {
+  border-top: 2px solid var(--ink);
+  padding: 8px 0 2px;
+}
+.mFnName {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--oxide);
+  margin-bottom: 4px;
+}
+.mSop {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 12.5px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.mMark {
+  min-width: 2ch;
+  font-size: 11px;
+}
+.markAgent {
+  color: var(--verm);
+}
+.markAssist {
+  color: var(--cobalt);
+}
+.markHuman {
+  color: var(--ink);
+}
+.mTag {
+  margin-left: auto;
+  font-size: 8px;
+  letter-spacing: 0.09em;
+  color: var(--stone);
+}
+
+/* ---- B4 anatomy ---- */
+.holds {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 2.4vw, 32px);
+  margin-top: 30px;
+}
+@media (max-width: 720px) {
+  .holds {
+    grid-template-columns: 1fr;
+  }
+}
+.hold {
+  border: 1px solid var(--hair);
+  border-top: 2px solid var(--ink);
+  padding: 12px 14px 14px;
+}
+.holdWho {
+  font-size: 9.5px;
+  letter-spacing: 0.11em;
+  font-weight: 600;
+  color: var(--oxide);
+  margin-bottom: 6px;
+}
+.holdText {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.holdsNote {
+  font-size: 9.5px;
+  letter-spacing: 0.09em;
+  color: var(--stone);
+  margin-top: 12px;
+}
+.struck {
+  margin-top: 26px;
+  border: 1px solid var(--hair);
+  border-left: 3px solid var(--verm);
+  padding: 14px 16px;
+}
+.struckLabel {
+  font-size: 12px;
+  letter-spacing: 0.07em;
+  color: var(--stone);
+  text-decoration: line-through;
+  text-decoration-color: var(--verm);
+  text-decoration-thickness: 1.5px;
+}
+.struckVerdict {
+  font-size: 12px;
+  letter-spacing: 0.09em;
+  font-weight: 600;
+  color: var(--verm);
+  margin-left: 10px;
+}
+.struckNote {
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  color: var(--stone);
+  margin-top: 8px;
+}
+
+/* mobile anatomy stack */
+.mStep {
+  border: 1px solid var(--hair);
+  border-top: 2px solid var(--ink);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.mStepHead {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  font-weight: 600;
+}
+.mStepNo {
+  color: var(--stone);
+}
+.mWhy {
+  font-size: 9.5px;
+  letter-spacing: 0.07em;
+  color: var(--oxide);
+  margin-top: 6px;
+}
+.mSys {
+  font-size: 9px;
+  letter-spacing: 0.09em;
+  color: var(--stone);
+  margin-top: 4px;
+}
+.mGate {
+  border-color: var(--cobalt);
+}
+.mGate .mStepHead {
+  color: var(--cobalt);
+}
+.mOutcome {
+  border-left: 3px solid var(--verm);
+}
+
+/* ---- B5 roadmap ---- */
+.funnel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--hair);
+  padding: 12px 0;
+  margin-bottom: 26px;
+}
+.funnelV {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ochre);
+}
+.funnelL {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--stone);
+}
+.funnelArrow {
+  color: var(--stone);
+  font-size: 12px;
+  padding: 0 4px;
+}
+.legend {
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--stone);
+  margin-top: 10px;
+}
+.lanesM {
+  border-top: 2px solid var(--ink);
+}
+.laneM {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.laneMName {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--oxide);
+  margin-bottom: 6px;
+}
+.laneMBar {
+  display: inline-block;
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  border: 1px solid var(--ink);
+  padding: 3px 8px;
+  margin: 0 6px 6px 0;
+}
+.laneMProposed {
+  border-style: dashed;
+  border-color: var(--ochre);
+  color: var(--ochre);
+}
+
+/* ---- B6 register & close ---- */
+.register {
+  border-top: 3px solid var(--ink);
+  margin-top: 8px;
+}
+.regRow {
+  display: grid;
+  grid-template-columns: 4.5ch 1.6fr 1fr 1fr 0.7fr;
+  gap: 0 18px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hair);
+}
+@media (max-width: 760px) {
+  .regRow {
+    grid-template-columns: 4.5ch 1fr 1fr;
+  }
+  .regHideM {
+    display: none;
+  }
+}
+.regHead {
+  font-size: 9px;
+  letter-spacing: 0.11em;
+  color: var(--stone);
+  border-bottom: 2px solid var(--ink);
+}
+.regCode {
+  font-size: 9.5px;
+  color: var(--stone);
+}
+.regInit {
+  font-size: 14.5px;
+}
+.regOwner {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--ink);
+}
+.regMeasure {
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  color: var(--ochre);
+}
+.regReview {
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  color: var(--cobalt);
+}
+.roles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(12px, 2vw, 28px);
+  margin-top: 30px;
+}
+@media (max-width: 880px) {
+  .roles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .roles {
+    grid-template-columns: 1fr;
+  }
+}
+.role {
+  border-top: 1px solid var(--ink);
+  padding-top: 8px;
+}
+.roleName {
+  font-size: 9.5px;
+  letter-spacing: 0.11em;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+.roleNote {
+  font-size: 12.5px;
+  color: var(--stone);
+  line-height: 1.5;
+}
+.living {
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  color: var(--stone);
+  margin-top: 20px;
+}
+.closeGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(26px, 4vw, 64px);
+  margin-top: 54px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .closeGrid {
+    grid-template-columns: 1fr;
+  }
+}
+.templateNote {
+  border: 1px solid var(--hair);
+  border-left: 3px solid var(--cobalt);
+  padding: 14px 16px;
+}
+.templateHead {
+  font-size: 9.5px;
+  letter-spacing: 0.11em;
+  font-weight: 600;
+  color: var(--cobalt);
+  margin-bottom: 8px;
+}
+.templateBody {
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 18px 28px;
+  margin-top: 40px;
+}
+.cta {
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--verm);
+  text-decoration: none;
+  border: 1.5px solid var(--verm);
+  padding: 12px 20px;
+}
+.cta:hover {
+  background: var(--verm);
+  color: var(--paper);
+  text-decoration: none;
+}
+.backlink {
+  font-size: 11px;
+  letter-spacing: 0.07em;
+}
+.colophon {
+  font-size: 9px;
+  letter-spacing: 0.09em;
+  color: var(--stone);
+  margin-top: 56px;
+  border-top: 1px solid var(--hair);
+  padding-top: 12px;
+}
