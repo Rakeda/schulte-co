@@ -83,32 +83,41 @@ export default function FinancialCase() {
             <div className="desk-only">
             <svg
               viewBox="0 0 420 210"
-              aria-label="The 20-minute workflow drawn, struck through, and redrawn at one minute"
+              aria-label="Two bars on one axis: the current 20-minute workflow, the redesigned 1-minute workflow, and the reclaimed 19 minutes hatched as capacity returned"
             >
+              <defs>
+                <pattern id="reclaimHatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                  <line x1="0" y1="0" x2="0" y2="6" stroke="var(--ochre)" strokeWidth="1" opacity=".55" />
+                </pattern>
+              </defs>
               <line x1="30" y1="180" x2="400" y2="180" stroke="var(--hair)" strokeWidth="1" />
               <line x1="30" y1="180" x2="30" y2="30" stroke="var(--hair)" strokeWidth="1" />
               <text x="24" y="196" fontSize="9" fill="var(--stone)">0</text>
               <text x="200" y="196" fontSize="9" fill="var(--stone)">10</text>
               <text x="376" y="196" fontSize="9" fill="var(--stone)">20 MIN</text>
-              <text x="42" y="48" fontSize="9" fill="var(--stone)">CURRENT · 20 MIN / DAY / EMPLOYEE</text>
+              <text x="30" y="48" fontSize="9" fill="var(--stone)">CURRENT · 20 MIN / DAY / EMPLOYEE</text>
               <path className="scrub" d="M30,72 H390" stroke="var(--oxide)" strokeWidth="24" fill="none" />
+              <text x="30" y="120" fontSize="9" fill="var(--stone)">REDESIGNED · 1 MIN / DAY</text>
               <path
                 className="scrub"
-                data-delay="0.5"
-                data-flash="flStrike"
-                d="M22,98 L398,46"
-                stroke="var(--ink)"
-                strokeWidth="2"
+                data-delay="0.45"
+                data-flash="reclaim"
+                d="M30,144 H48"
+                stroke="var(--cobalt)"
+                strokeWidth="24"
                 fill="none"
               />
-              <circle id="flStrike" className="flashfill" cx="398" cy="46" r="7" />
-              <text x="42" y="126" fontSize="9" fill="var(--stone)">REDESIGNED · 1 MIN / DAY</text>
-              <path className="scrub" data-delay="0.72" d="M30,148 H48" stroke="var(--cobalt)" strokeWidth="24" fill="none" />
-              <text x="58" y="152" fontSize="9" fill="var(--ochre)">19 MIN / DAY / EMPLOYEE, RETURNED TO REAL WORK</text>
+              <g id="reclaim" className="hatchin">
+                <rect x="48" y="132" width="342" height="24" fill="url(#reclaimHatch)" />
+                <rect x="48" y="132" width="342" height="24" fill="none" stroke="var(--ochre)" strokeWidth="0.8" opacity=".7" />
+                <text x="219" y="148.5" textAnchor="middle" fontSize="9" fontWeight="600" fill="var(--ochre)">
+                  19 MIN / DAY / EMPLOYEE · RETURNED TO REAL WORK
+                </text>
+              </g>
             </svg>
             <p className={styles.barcap}>
-              FIG. 05 · DRAWN, STRUCK, AND REDRAWN BY THE TRAVERSE. WE TURN
-              INEFFICIENCY INTO MEASURABLE BUSINESS VALUE.
+              FIG. 05 · ONE AXIS, TWICE. THE HATCHED SPAN IS THE CAPACITY THE
+              REDESIGN HANDS BACK.
             </p>
             </div>
 
@@ -116,30 +125,39 @@ export default function FinancialCase() {
             <div className="mob-only">
               <svg
                 viewBox="0 0 360 200"
-                aria-label="The 20-minute workflow drawn, struck through, and redrawn at one minute"
+                aria-label="Two bars on one axis: the current 20-minute workflow, the redesigned 1-minute workflow, and the reclaimed 19 minutes hatched as capacity returned"
               >
+                <defs>
+                  <pattern id="reclaimHatchM" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                    <line x1="0" y1="0" x2="0" y2="6" stroke="var(--ochre)" strokeWidth="1" opacity=".55" />
+                  </pattern>
+                </defs>
                 <text x="8" y="20" fontSize="12" fill="var(--stone)">CURRENT · 20 MIN / DAY / EMPLOYEE</text>
                 <path className="scrub" d="M8,44 H336" stroke="var(--oxide)" strokeWidth="22" fill="none" />
+                <text x="8" y="96" fontSize="12" fill="var(--stone)">REDESIGNED · 1 MIN / DAY</text>
                 <path
                   className="scrub"
-                  data-delay="0.5"
-                  data-flash="flStrikeM"
-                  d="M2,66 L344,24"
-                  stroke="var(--ink)"
-                  strokeWidth="2"
+                  data-delay="0.45"
+                  data-flash="reclaimM"
+                  d="M8,118 H24"
+                  stroke="var(--cobalt)"
+                  strokeWidth="22"
                   fill="none"
                 />
-                <circle id="flStrikeM" className="flashfill" cx="344" cy="24" r="7" />
-                <text x="8" y="102" fontSize="12" fill="var(--stone)">REDESIGNED · 1 MIN / DAY</text>
-                <path className="scrub" data-delay="0.72" d="M8,124 H25" stroke="var(--cobalt)" strokeWidth="22" fill="none" />
-                <text x="36" y="129" fontSize="12" fill="var(--ochre)">19 MIN RETURNED TO REAL WORK</text>
+                <g id="reclaimM" className="hatchin">
+                  <rect x="24" y="107" width="312" height="22" fill="url(#reclaimHatchM)" />
+                  <rect x="24" y="107" width="312" height="22" fill="none" stroke="var(--ochre)" strokeWidth="0.8" opacity=".7" />
+                  <text x="180" y="122" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--ochre)">
+                    19 MIN RETURNED TO REAL WORK
+                  </text>
+                </g>
                 <line x1="8" y1="162" x2="352" y2="162" stroke="var(--hair)" strokeWidth="1" />
                 <text x="8" y="182" fontSize="11" fill="var(--stone)">0</text>
                 <text x="168" y="182" fontSize="11" fill="var(--stone)">10</text>
                 <text x="310" y="182" fontSize="11" fill="var(--stone)">20 MIN</text>
               </svg>
               <p className={styles.barcap}>
-                FIG. 05 · DRAWN, STRUCK, AND REDRAWN BY THE TRAVERSE.
+                FIG. 05 · THE HATCHED SPAN IS THE CAPACITY HANDED BACK.
               </p>
             </div>
           </div>
