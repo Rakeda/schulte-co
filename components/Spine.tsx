@@ -11,31 +11,38 @@ function pr(i: number): number {
 }
 
 /*
- * THE STAIR (desktop): a 2:1 dimetric switchback down the gutter.
- * The whole descent exists from first paint as a dashed stone PROPOSAL;
- * scroll sweeps a survey front down the sheet converting it to solid ink
- * RECORD via one growing clip rect. A vermilion tread-mark walks the
- * nosings. Landings sit at each figure datum; flights alternate direction.
- * Identity pixel mapping — dimetric geometry cannot survive non-uniform
- * scaling, so the stair never uses preserveAspectRatio="none".
+ * THE STAIR (desktop): a switchback stair tower in the gutter, drawn in
+ * 2:1 dimetric with FIXED, honest step proportions — 15px tread run,
+ * 12px riser, 14px breadth. Section height is absorbed by MORE steps and
+ * turns, never by stretching a step. The whole descent pre-exists as a
+ * dashed stone PROPOSAL; scroll sweeps a survey front down the sheet
+ * converting it to inked RECORD via one growing clip rect. A vermilion
+ * tread-mark walks the nosings. Landings sit at each figure datum.
+ * Identity pixel mapping: dimetric geometry never goes near
+ * preserveAspectRatio="none".
  *
- * Mobile keeps the simple edge datum line (out of the stair's scope).
+ * Mobile keeps the simple edge datum line.
  */
 
-const BAND = { l: 6, r: 70 };
-const RUN_DX = 46; // total nosing travel per flight
-const BR_DX = 18; // breadth projection dx
-const BR_DY = 9; // breadth projection dy
+const GUT = 92;
+const XMIN = 22; // nosing x range [XMIN, XMAX]; breadth extends 14 left of A/B
+const XMAX = 82;
+const DX = 15; // tread run, projected dx (2:1 → dy = 7.5)
+const S = 7.5;
+const RISE = 12;
+const BX = 14; // breadth projection
+const BY = 7;
+const PITCH = S + RISE;
 
-type Step = { d: string; yTop: number; ax: number; ay: number; bx: number; by: number };
 type Numeral = { x: number; y: number; no: string; yAt: number };
 
 type Built =
   | {
       mode: "stair";
       H: number;
-      steps: Step[];
-      landings: string[];
+      stairD: string;
+      landingsD: string;
+      nosings: number[][]; // [ax, ay, bx, by]
       numerals: Numeral[];
     }
   | {
@@ -49,59 +56,64 @@ function buildStair(
   marks: { y: number; no: string }[],
   H: number
 ): Extract<Built, { mode: "stair" }> {
-  const steps: Step[] = [];
-  const landings: string[] = [];
+  let stairD = "";
+  let landingsD = "";
+  const nosings: number[][] = [];
   const numerals: Numeral[] = [];
+  let x = 52;
   let y = 24;
   let dir = 1;
 
-  const flight = (toY: number) => {
-    const fh = toY - y;
-    if (fh < 60) {
-      y = toY;
-      return;
+  const descendTo = (target: number) => {
+    while (y + PITCH <= target - 12) {
+      let bx = x + DX * dir;
+      if (bx > XMAX || bx < XMIN) {
+        dir = -dir;
+        bx = x + DX * dir;
+      }
+      const ax = x;
+      const ay = y;
+      const by = ay + S;
+      const cx = bx - BX;
+      const cy = by + BY;
+      const dx2 = ax - BX;
+      const dy2 = ay + BY;
+      stairD +=
+        `M${ax},${ay} L${bx},${by} L${cx},${cy} L${dx2},${dy2} Z ` +
+        `M${bx},${by} L${bx},${by + RISE} ` +
+        `M${bx},${by + RISE} L${cx},${cy + RISE} L${cx},${cy} `;
+      nosings.push([ax, ay, bx, by]);
+      x = bx;
+      y = by + RISE;
     }
-    const N = Math.max(3, Math.min(Math.round(fh / 44), 34));
-    const s = RUN_DX / 2 / N; // per-step travel dy (and dx = 2s)
-    const r = Math.max(3, fh / N - s);
-    const startX = dir > 0 ? 24 : 52;
-    for (let i = 0; i < N; i++) {
-      const ax = startX + i * 2 * s * dir;
-      const ay = y + i * (s + r);
-      const bx = ax + 2 * s * dir;
-      const by = ay + s;
-      const cx = bx - BR_DX * dir;
-      const cy = by + BR_DY;
-      const dx = ax - BR_DX * dir;
-      const dy = ay + BR_DY;
-      const d =
-        `M${ax},${ay} L${bx},${by} L${cx},${cy} L${dx},${dy} Z ` +
-        `M${bx},${by} L${bx},${by + r} ` +
-        `M${bx},${by + r} L${cx},${cy + r} L${cx},${cy}`;
-      steps.push({ d, yTop: ay, ax, ay, bx, by });
-    }
-    y = toY;
   };
 
   for (const m of marks) {
-    flight(m.y);
+    descendTo(m.y);
     const ly = m.y;
-    landings.push(
-      `M24,${ly} L70,${ly} L52,${ly + BR_DY} L6,${ly + BR_DY} Z ` +
-        `M70,${ly} L70,${ly + 6} L52,${ly + 15} L52,${ly + BR_DY}`
-    );
-    if (m.no) {
-      numerals.push({ x: dir > 0 ? 8 : 58, y: ly + 27, no: m.no, yAt: ly });
-    }
-    y = ly + 20;
+    landingsD +=
+      `M${XMIN},${ly} L${XMAX},${ly} L${XMAX - BX},${ly + BY} L${XMIN - BX},${ly + BY} Z ` +
+      `M${XMAX},${ly} L${XMAX},${ly + 6} L${XMAX - BX},${ly + BY + 6} L${XMAX - BX},${ly + BY} `;
+    numerals.push({
+      x: dir > 0 ? XMIN - 14 : XMAX + 1,
+      y: ly + 22,
+      no: m.no,
+      yAt: ly,
+    });
+    y = ly + BY + 14;
     dir = -dir;
+    x = Math.min(Math.max(x, XMIN), XMAX);
   }
-  // tail flight: the descent continues to the sheet's foot
-  flight(H - 40);
-  return { mode: "stair", H, steps, landings, numerals };
+  descendTo(H - 36);
+
+  return { mode: "stair", H, stairD, landingsD, nosings, numerals };
 }
 
-function buildLine(H: number, sections: HTMLElement[], span: number): Extract<Built, { mode: "line" }> {
+function buildLine(
+  H: number,
+  sections: HTMLElement[],
+  span: number
+): Extract<Built, { mode: "line" }> {
   let d = "M 38,0";
   let y = 0;
   let i = 0;
@@ -150,7 +162,7 @@ export default function Spine() {
       ? buildLine(H, sections, span)
       : buildStair(
           sections.map((sec, i) => ({
-            y: Math.max(sec.offsetTop, 60),
+            y: Math.max(sec.offsetTop, 80),
             no: FIGURES[i]?.figNo ?? "",
           })),
           H
@@ -160,7 +172,6 @@ export default function Spine() {
     setBuilt(next);
   }, [version]);
 
-  // the mobile line needs its dash length measured after render
   useEffect(() => {
     if (!built || built.mode !== "line") return;
     const path = linePathRef.current;
@@ -193,17 +204,18 @@ export default function Spine() {
       return;
     }
 
-    // stair: the survey front
+    // the survey front
     let F = Math.min(Math.max(y + vh * 0.38, 0), b.H);
     if (rm || gp > 0.985) F = b.H;
     clipRectRef.current?.setAttribute("height", F.toFixed(1));
 
-    // the tread underfoot
-    let idx = -1;
-    for (let i = 0; i < b.steps.length; i++) {
-      if (b.steps[i].yTop <= F) idx = i;
-      else break;
-    }
+    // the tread underfoot: last nosing above the front
+    const ns = b.nosings;
+    let idx = stepIdxRef.current;
+    if (idx < 0) idx = 0;
+    while (idx < ns.length - 1 && ns[idx + 1][1] <= F) idx++;
+    while (idx > 0 && ns[idx][1] > F) idx--;
+    if (ns.length === 0 || ns[0][1] > F) idx = -1;
     if (idx !== stepIdxRef.current) {
       stepIdxRef.current = idx;
       const mark = markRef.current;
@@ -211,13 +223,12 @@ export default function Spine() {
         if (idx < 0) {
           mark.setAttribute("d", "");
         } else {
-          const s = b.steps[idx];
-          mark.setAttribute("d", `M${s.ax},${s.ay} L${s.bx},${s.by}`);
+          const [ax, ay, bx, by] = ns[idx];
+          mark.setAttribute("d", `M${ax},${ay} L${bx},${by}`);
         }
       }
     }
 
-    // numerals ink as their landing is passed
     const g = numGroupRef.current;
     if (g) {
       for (let i = 0; i < g.children.length; i++) {
@@ -272,21 +283,17 @@ export default function Spine() {
     <svg
       ref={svgRef}
       className={styles.spine}
-      viewBox={`0 0 76 ${built.H}`}
+      viewBox={`0 0 ${GUT} ${built.H}`}
       preserveAspectRatio="xMinYMin meet"
       aria-hidden="true"
     >
       <defs>
         <g id="stairGeom">
-          {built.steps.map((s) => (
-            <path key={s.d} d={s.d} />
-          ))}
-          {built.landings.map((d) => (
-            <path key={d} d={d} />
-          ))}
+          <path d={built.stairD} />
+          <path d={built.landingsD} />
         </g>
         <clipPath id="stairClip">
-          <rect ref={clipRectRef} x="0" y="0" width="76" height="0" />
+          <rect ref={clipRectRef} x="0" y="0" width={GUT} height="0" />
         </clipPath>
       </defs>
       <use href="#stairGeom" className={styles.proposed} />

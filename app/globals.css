@@ -16,7 +16,7 @@
   --nverm: #f0492a;
   --noxide: #5f8a76;
   --nhair: #2a2d2b;
-  --gutter: 76px;
+  --gutter: 92px;
   --header-h: 54px;
   /* cap for the sheet-edge strips (header + baseline) on ultra-wide screens:
      wider than the content column so they stay a frame, never a nav bar */
