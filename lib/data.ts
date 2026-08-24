@@ -12,6 +12,7 @@ export const CONTACT = {
   gapsHref: "mailto:work@schulteand.co?subject=Find%20the%20gaps",
   startHref: "mailto:work@schulteand.co?subject=Start%20with%20one%20problem",
   aiHref: "mailto:work@schulteand.co?subject=AI%2C%20properly",
+  secHref: "mailto:work@schulteand.co?subject=Commission%20Schedule%20C",
 };
 
 /** Header navigator: curated figures, keyed by section index (0 = FIG. 01). */
@@ -22,6 +23,7 @@ export type NavItem = { fig: string; label: string; href: string; index: number 
 export const NAV_ITEMS: NavItem[] = [
   { fig: "A.", label: "LANDING", href: "/", index: -2 },
   { fig: "B.", label: "AI PLANNING", href: "/ai", index: -1 },
+  { fig: "C.", label: "SECURITY", href: "/security", index: -3 },
 ];
 
 export type SectionLink = { fig: string; label: string; href: string };
@@ -41,6 +43,16 @@ export const SECTION_LINKS_AI: SectionLink[] = [
   { fig: "B4", label: "ANATOMY", href: "#b4" },
   { fig: "B5", label: "ROADMAP", href: "#b5" },
   { fig: "B6", label: "OWNERSHIP", href: "#b6" },
+];
+
+export const SECTION_LINKS_SEC: SectionLink[] = [
+  { fig: "C2", label: "BINDER TEST", href: "#c2" },
+  { fig: "C3", label: "ENVIRONMENT", href: "#c3" },
+  { fig: "C4", label: "RECONSTRUCTION", href: "#c4" },
+  { fig: "C5", label: "BLIND CASE", href: "#c5" },
+  { fig: "C6", label: "FOUR HOURS", href: "#c6" },
+  { fig: "C7", label: "READINESS", href: "#c7" },
+  { fig: "C8", label: "TRAINING", href: "#c8" },
 ];
 
 /** Hero data strip: measured values (ochre) with their labels. */
