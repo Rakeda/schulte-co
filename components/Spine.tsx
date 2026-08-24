@@ -25,8 +25,10 @@ function pr(i: number): number {
  */
 
 const GUT = 92;
-const XMIN = 22; // nosing x range [XMIN, XMAX]; breadth extends 14 left of A/B
-const XMAX = 82;
+// nosing x range; the tread's breadth extends BX *behind* the direction of
+// travel (flips with dir), so both bounds reserve BX of margin
+const XMIN = 22;
+const XMAX = 70;
 const DX = 15; // tread run, projected dx (2:1 → dy = 7.5)
 const S = 7.5;
 const RISE = 12;
@@ -74,9 +76,10 @@ function buildStair(
       const ax = x;
       const ay = y;
       const by = ay + S;
-      const cx = bx - BX;
+      // breadth flips with travel so the tread always sits behind the nosing
+      const cx = bx - BX * dir;
       const cy = by + BY;
-      const dx2 = ax - BX;
+      const dx2 = ax - BX * dir;
       const dy2 = ay + BY;
       stairD +=
         `M${ax},${ay} L${bx},${by} L${cx},${cy} L${dx2},${dy2} Z ` +
