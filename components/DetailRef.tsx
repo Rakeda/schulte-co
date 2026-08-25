@@ -32,7 +32,13 @@ export default function DetailRef({ to, label }: { to: string; label?: string })
         }
       }}
     >
-      <svg className={styles.bub} viewBox="0 0 26 26" aria-hidden="true">
+      {/* inline size: plate-level `.grid svg { width: 100% }` rules must never inflate the bubble */}
+      <svg
+        className={styles.bub}
+        viewBox="0 0 26 26"
+        style={{ width: "21px", height: "21px" }}
+        aria-hidden="true"
+      >
         <circle className="scrub" cx="13" cy="13" r="11.5" fill="none" />
         <line x1="3.5" y1="13" x2="22.5" y2="13" />
         <text x="13" y="10.8" textAnchor="middle">{f.figNo}</text>
