@@ -1,8 +1,8 @@
+/* the night plate stops at the gutter's edge: the binding margin stays
+   paper and the stair passes unbroken beside it */
 .f8 {
   background: var(--npaper);
   color: var(--nink);
-  margin-left: calc(0px - var(--gutter));
-  padding-left: var(--gutter);
 }
 .kn {
   font-family: var(--font-display), serif;
