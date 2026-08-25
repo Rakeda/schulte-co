@@ -76,6 +76,14 @@ export default function Header() {
     <header className={styles.hdr}>
       <div className={styles.row}>
         <a className={styles.wm} href="/#f1">
+          <svg className={styles.mark} viewBox="33 19 53 56" aria-hidden="true">
+            <g fill="none" stroke="var(--ink)" strokeWidth="2.2">
+              <path d="M52,24 L67,31.5 L53,38.5 L38,31 Z" />
+              <path d="M67,31.5 L67,43.5 L53,50.5 L53,38.5" />
+              <path d="M67,43.5 L52,51 L66,58 L81,50.5 Z" />
+              <path d="M52,51 L52,63 L66,70 L66,58" />
+            </g>
+          </svg>
           Schulte &amp; Co.
         </a>
         <nav className={styles.nav} aria-label="Drawing sheets">

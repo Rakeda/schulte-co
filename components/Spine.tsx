@@ -51,7 +51,7 @@ function buildStair(marks: { y: number; no: string }[], H: number): Built {
   let y = 24;
   let dir = 1;
 
-  const descendTo = (target: number) => {
+  const descendTo = (target: number, emit = true) => {
     while (y + PITCH <= target - 12) {
       let bx = x + DX * dir;
       if (bx > XMAX || bx < XMIN) {
@@ -66,18 +66,25 @@ function buildStair(marks: { y: number; no: string }[], H: number): Built {
       const cy = by + BY;
       const dx2 = ax - BX * dir;
       const dy2 = ay + BY;
-      stairD +=
-        `M${ax},${ay} L${bx},${by} L${cx},${cy} L${dx2},${dy2} Z ` +
-        `M${bx},${by} L${bx},${by + RISE} ` +
-        `M${bx},${by + RISE} L${cx},${cy + RISE} L${cx},${cy} `;
-      nosings.push([ax, ay, bx, by]);
+      if (emit) {
+        stairD +=
+          `M${ax},${ay} L${bx},${by} L${cx},${cy} L${dx2},${dy2} Z ` +
+          `M${bx},${by} L${bx},${by + RISE} ` +
+          `M${bx},${by + RISE} L${cx},${cy + RISE} L${cx},${cy} `;
+        nosings.push([ax, ay, bx, by]);
+      }
       x = bx;
       y = by + RISE;
     }
   };
 
+  let first = true;
   for (const m of marks) {
-    descendTo(m.y);
+    /* the flight above the first landing became the site's mark: it is
+       drawn in the header now, so the gutter holds its place empty. The
+       walk still runs (x/dir advance) so everything below is unchanged. */
+    descendTo(m.y, !first);
+    first = false;
     const ly = m.y;
     landingsD +=
       `M${XMIN},${ly} L${XMAX},${ly} L${XMAX - BX},${ly + BY} L${XMIN - BX},${ly + BY} Z ` +

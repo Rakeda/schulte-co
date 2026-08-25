@@ -30,12 +30,22 @@
 }
 
 .wm {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   font-family: var(--font-display), serif;
   font-size: 19px;
   letter-spacing: 0.01em;
   text-decoration: none;
   color: var(--ink);
   white-space: nowrap;
+}
+
+/* the mark: the stair's first flight, lifted off the top of the gutter */
+.mark {
+  width: 21px;
+  height: 22px;
+  flex: none;
 }
 @media (max-width: 460px) {
   .wm {
