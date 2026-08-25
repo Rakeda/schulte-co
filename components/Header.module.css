@@ -230,3 +230,12 @@
     display: none;
   }
 }
+
+/* the sheet turn: the header is the pin bar; the active tab is the one
+   element that travels between pages */
+.hdr {
+  view-transition-name: sc-header;
+}
+.navlink.on {
+  view-transition-name: sc-navmark;
+}

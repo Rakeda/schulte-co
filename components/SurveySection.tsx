@@ -1,7 +1,11 @@
 "use client";
 
-import { useRef } from "react";
+import { createContext, useRef } from "react";
 import { useReveal, useScrub } from "@/lib/motion";
+
+/** The enclosing figure's id, for instruments that need to know where they
+ *  live (the arrival mark in FigureHeader reads it). */
+export const SectionIdContext = createContext<string | null>(null);
 
 type Props = {
   id: string;
@@ -31,16 +35,18 @@ export default function SurveySection({
   useScrub(ref);
   useReveal(ref);
   return (
-    <section
-      ref={ref}
-      id={id}
-      data-fig
-      data-figno={figNo}
-      data-title={title}
-      data-datum={datum}
-      className={`fig ${className ?? ""}`.trim()}
-    >
-      {children}
-    </section>
+    <SectionIdContext.Provider value={id}>
+      <section
+        ref={ref}
+        id={id}
+        data-fig
+        data-figno={figNo}
+        data-title={title}
+        data-datum={datum}
+        className={`fig ${className ?? ""}`.trim()}
+      >
+        {children}
+      </section>
+    </SectionIdContext.Provider>
   );
 }

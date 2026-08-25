@@ -4,6 +4,7 @@ import Baseline from "@/components/Baseline";
 import BracketCursor from "@/components/BracketCursor";
 import InstrumentRail from "@/components/InstrumentRail";
 import Recede from "@/components/Recede";
+import Handoff from "@/components/Handoff";
 import Hero from "@/components/sections/Hero";
 import Problem from "@/components/sections/Problem";
 import HiddenCosts from "@/components/sections/HiddenCosts";
@@ -25,6 +26,7 @@ export default function Page() {
         <FinancialCase />
         <AiPhilosophy />
         <PartnersClose />
+        <Handoff />
       </main>
       <Baseline />
       <BracketCursor />

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { prefersReducedMotion } from "@/lib/motion";
+import { announceTarget, prefersReducedMotion } from "@/lib/motion";
 import { CONTACT } from "@/lib/data";
 import { FIGURES, Figure } from "@/lib/figures";
 import styles from "./SheetIndex.module.css";
@@ -44,6 +44,7 @@ export default function SheetIndex({ open, activeIndex, onClose, rows }: Props) 
   const goTo = (id: string) => {
     onClose();
     requestAnimationFrame(() => {
+      announceTarget(id);
       document.getElementById(id)?.scrollIntoView({
         behavior: prefersReducedMotion() ? "auto" : "smooth",
       });

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { prefersReducedMotion, useReveal } from "@/lib/motion";
+import { announceTarget, prefersReducedMotion, useReveal } from "@/lib/motion";
 import { CONTACT, DATA_STRIP, ENTRY_POINTS } from "@/lib/data";
 import Counter from "@/components/Counter";
 import FigIndex from "@/components/FigIndex";
@@ -167,6 +167,17 @@ export default function Hero() {
                 )}
               </b>{" "}
               {s.l}
+              {(s.l === "HRS SAVED / YR" || s.l === "RECOVERED") && (
+                <a
+                  className={styles.cfsup}
+                  data-snap
+                  href="#f5"
+                  onClick={() => announceTarget("f5")}
+                  aria-label="Established in Figure 05, the financial case"
+                >
+                  FROM FIG. 05 →
+                </a>
+              )}
               {i < DATA_STRIP.length - 1 && " · "}
             </span>
           ))}

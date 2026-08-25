@@ -157,6 +157,39 @@ main.survey {
   outline: none;
 }
 
+/* ================= THE SHEET TURN (O-1) =================
+   Cross-document view transitions: navigating between schedules plays the
+   site's own lift/settle grammar while the header and baseline hold still
+   as the fixed frame. Progressive enhancement: browsers without the API
+   keep ordinary navigation. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-old(root) {
+    animation: vtLift 0.42s cubic-bezier(0.83, 0, 0.17, 1) both;
+  }
+  ::view-transition-new(root) {
+    animation: vtSettle 0.55s cubic-bezier(0.83, 0, 0.17, 1) both;
+  }
+  @keyframes vtLift {
+    to {
+      opacity: 0;
+      transform: translateY(-46px);
+    }
+  }
+  @keyframes vtSettle {
+    from {
+      opacity: 0;
+      transform: translateY(26px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
 /* ================= INDEX OF FIGURES (top of each sheet) ================= */
 .figindex {
   display: flex;

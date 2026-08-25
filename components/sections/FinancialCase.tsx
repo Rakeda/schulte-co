@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import SurveySection from "@/components/SurveySection";
 import FigureHeader from "@/components/FigureHeader";
 import Counter from "@/components/Counter";
@@ -11,6 +14,7 @@ import styles from "./FinancialCase.module.css";
  * strikes, and redraws at one minute.
  */
 export default function FinancialCase() {
+  const [show, setShow] = useState(false);
   return (
     <SurveySection id="f5">
       <div className="inwrap">
@@ -25,7 +29,7 @@ export default function FinancialCase() {
           <a href="#f4" data-snap>Step 04</a> exists to find.
         </p>
         <div className={styles.grid}>
-          <div className={`${styles.sheet} mono`}>
+          <div className={`${styles.sheet} mono ${show ? styles.showwork : ""}`}>
             <div className={`${styles.srow} rowin`}>
               <span className={styles.sc}>L-01</span>
               <span className={styles.sl}>CURRENT WORKFLOW</span>
@@ -42,14 +46,14 @@ export default function FinancialCase() {
             </div>
             <div className={`${styles.srow} rowin`} style={{ "--d": ".16s" } as React.CSSProperties}>
               <span className={styles.sc}>L-03</span>
-              <span className={styles.sl}>TIME RETURNED</span>
+              <span className={styles.sl}><span className={styles.ck} aria-hidden="true">✓ </span>TIME RETURNED</span>
               <span className={styles.sv}>
                 <Counter value={FIN.savedMin} suffix=" MIN" /> / DAY
               </span>
             </div>
             <div className={`${styles.srow} rowin`} style={{ "--d": ".24s" } as React.CSSProperties}>
               <span className={styles.sc}>L-04</span>
-              <span className={styles.sl}>AT SCALE</span>
+              <span className={styles.sl}><span className={`${styles.ck} ${styles.ck2}`} aria-hidden="true">✓ </span>AT SCALE</span>
               <span className={styles.sv}>
                 × <Counter value={FIN.employees} /> EMPLOYEES × <Counter value={FIN.days} /> DAYS
               </span>
@@ -68,7 +72,15 @@ export default function FinancialCase() {
                 <Counter value={FIN.hrsYr} suffix=" HRS" /> / YR
               </span>
             </div>
-            <div className={`${styles.total} rowin`} style={{ "--d": ".5s" } as React.CSSProperties}>
+            <div
+              className={`${styles.total} rowin`}
+              style={{ "--d": ".5s" } as React.CSSProperties}
+              tabIndex={0}
+              onMouseEnter={() => setShow(true)}
+              onMouseLeave={() => setShow(false)}
+              onFocus={() => setShow(true)}
+              onBlur={() => setShow(false)}
+            >
               <span className={styles.tlab}>CAPACITY RECOVERED</span>
               <span className={styles.tval}>
                 <Counter value={FIN.dollars} prefix="≈$" duration={1300} />
@@ -77,6 +89,11 @@ export default function FinancialCase() {
                 AT A ≈${FIN.rate}/HR LOADED RATE · FROM ONE WORKFLOW
               </span>
             </div>
+            <p className={styles.work} aria-hidden={!show}>
+              ≈${FIN.dollars.toLocaleString("en-US")} = {FIN.savedMin} MIN ×{" "}
+              {FIN.employees} EMPLOYEES × {FIN.days} DAYS × ${FIN.rate}/HR ÷ 60
+              · CHECKED
+            </p>
             <p className={styles.rx}>REDUCTION: AND THAT IS ONLY ONE WORKFLOW.</p>
           </div>
           <div>

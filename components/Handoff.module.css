@@ -1,0 +1,59 @@
+.band {
+  margin-top: clamp(8px, 2vw, 24px);
+  padding-bottom: 30px;
+}
+.rule {
+  display: block;
+  width: 100%;
+  height: 10px;
+}
+.rule line {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+.link {
+  position: relative;
+  display: block;
+  padding: 16px 72px 8px 0;
+  text-decoration: none;
+}
+.kick {
+  display: block;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: var(--stone);
+  margin-bottom: 8px;
+}
+.big {
+  display: block;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(28px, 4.5vw, 50px);
+  line-height: 1.05;
+  color: var(--ink);
+}
+.thesis {
+  display: block;
+  margin-top: 10px;
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  color: var(--cobalt);
+}
+.arrow {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(30px, 4vw, 44px);
+  color: var(--verm);
+  transition: transform 0.15s ease-out;
+}
+.link:hover .arrow,
+.link:focus-visible .arrow {
+  transform: translateY(-50%) translateX(5px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    transition: none;
+  }
+}
