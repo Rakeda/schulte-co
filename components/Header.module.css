@@ -99,7 +99,33 @@
   flex: 1;
 }
 
-/* the folded title block's station readout: mobile-only sheet-index trigger */
+/* the folded navigator: mobile-only hamburger opening the sheet plate */
+.burger {
+  display: none;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+.burger span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--ink);
+}
+.burger::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+}
+.burger:hover span {
+  background: var(--verm);
+}
+
 .station {
   display: none;
   position: relative;
@@ -120,12 +146,8 @@
   inset: -10px;
 }
 @media (max-width: 880px) {
-  .station {
-    display: block;
-    margin-inline: auto;
-  }
-  .sp {
-    display: none;
+  .burger {
+    display: inline-flex;
   }
 }
 .coords {
@@ -229,4 +251,13 @@
   .coords {
     display: none;
   }
+}
+
+/* the sheet turn: the header is the pin bar; the active tab is the one
+   element that travels between pages */
+.hdr {
+  view-transition-name: sc-header;
+}
+.navlink.on {
+  view-transition-name: sc-navmark;
 }

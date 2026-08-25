@@ -1,5 +1,6 @@
 import SurveySection from "@/components/SurveySection";
 import FigureHeader from "@/components/FigureHeader";
+import DetailRef from "@/components/DetailRef";
 import Counter from "@/components/Counter";
 import {
   B5_FUNNEL,
@@ -185,7 +186,7 @@ export default function Roadmap() {
         <p className={`${styles.crossref} mono`}>
           {B5_NOTE}
           <br />
-          <a href="/#f4">{B5_GATE_REF} · FIG. 04</a>
+          <DetailRef to="f4" label={B5_GATE_REF} />
         </p>
       </div>
     </SurveySection>

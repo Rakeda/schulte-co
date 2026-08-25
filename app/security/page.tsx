@@ -5,6 +5,7 @@ import Baseline from "@/components/Baseline";
 import BracketCursor from "@/components/BracketCursor";
 import InstrumentRail from "@/components/InstrumentRail";
 import Recede from "@/components/Recede";
+import Handoff from "@/components/Handoff";
 import SecHero from "@/components/security/SecHero";
 import BinderTest from "@/components/security/BinderTest";
 import EnvSurvey from "@/components/security/EnvSurvey";
@@ -34,6 +35,7 @@ export default function SecurityPage() {
         <FourHours />
         <ReadinessScore />
         <TrainWhatFailed />
+        <Handoff />
       </main>
       <Baseline />
       <BracketCursor />

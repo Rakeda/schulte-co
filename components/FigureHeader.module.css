@@ -24,6 +24,49 @@
   letter-spacing: 0.09em;
   color: var(--stone);
 }
+/* ---- the arrival mark: a checker's red loop around the figure number ---- */
+.noWrap {
+  position: relative;
+  display: inline-block;
+}
+.arr {
+  position: absolute;
+  left: -14px;
+  top: -13px;
+  width: calc(100% + 28px);
+  height: calc(100% + 26px);
+  overflow: visible;
+  pointer-events: none;
+}
+.arr ellipse {
+  fill: none;
+  stroke: var(--verm);
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+}
+.e1 {
+  stroke-width: 1.6;
+}
+.e2 {
+  stroke-width: 1;
+}
+.arrOn .e1 {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.35s cubic-bezier(0.83, 0, 0.17, 1);
+}
+.arrOn .e2 {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.42s cubic-bezier(0.83, 0, 0.17, 1) 0.05s;
+}
+.arrInstant .e1,
+.arrInstant .e2 {
+  transition: none;
+}
+.arrFade {
+  opacity: 0;
+  transition: opacity 0.25s linear;
+}
+
 .night {
   border-top-color: var(--nink);
 }

@@ -1,5 +1,6 @@
 import SurveySection from "@/components/SurveySection";
 import FigureHeader from "@/components/FigureHeader";
+import DetailRef from "@/components/DetailRef";
 import { CONTACT } from "@/lib/data";
 import {
   B6_COLOPHON,
@@ -90,7 +91,7 @@ export default function Ownership() {
             ))}
             <p className={`${styles.lnote} mono`}>
               WE DO NOT STOP AT PAPER. SCHEDULE A GOVERNS THE BUILD:{" "}
-              <a href="/#f4">BUILD · PROVE · TEACH · HAND BACK</a>
+              <DetailRef to="f4" label="BUILD · PROVE · TEACH · HAND BACK" />
             </p>
           </div>
           <div className={`${styles.templateNote} wipe`}>

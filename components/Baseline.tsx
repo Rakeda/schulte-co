@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { prefersReducedMotion, useResizeVersion, useScrollFrame } from "@/lib/motion";
+import { usePathname } from "next/navigation";
+import { announceTarget, prefersReducedMotion, useResizeVersion, useScrollFrame } from "@/lib/motion";
+import { NEXT_SHEET } from "@/lib/data";
 import { FIGURES } from "@/lib/figures";
 import styles from "./Baseline.module.css";
 
@@ -60,10 +62,15 @@ export default function Baseline() {
   });
 
   const goTo = (index: number) => {
-    sectionsRef.current[index]?.scrollIntoView({
+    const sec = sectionsRef.current[index];
+    if (!sec) return;
+    announceTarget(sec.id);
+    sec.scrollIntoView({
       behavior: prefersReducedMotion() ? "auto" : "smooth",
     });
   };
+  const pathname = usePathname();
+  const endLabel = NEXT_SHEET[pathname ?? "/"]?.end ?? "END OF SURVEY →";
 
   return (
     <nav className={styles.baseline} aria-label="Baseline strip map">
@@ -89,7 +96,7 @@ export default function Baseline() {
           ))}
           <div ref={nibRef} className={styles.nib} />
         </div>
-        <span className={styles.end}>END OF SURVEY →</span>
+        <span className={styles.end}>{endLabel}</span>
       </div>
     </nav>
   );

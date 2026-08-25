@@ -2,17 +2,22 @@
 
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { prefersReducedMotion } from "@/lib/motion";
+import { announceTarget, prefersReducedMotion } from "@/lib/motion";
 import { CONTACT } from "@/lib/data";
 import { FIGURES, Figure } from "@/lib/figures";
 import styles from "./SheetIndex.module.css";
+
+type Row = Figure & { href?: string };
 
 type Props = {
   open: boolean;
   activeIndex: number;
   onClose: () => void;
-  /** sheet list override for pages outside the home manifest */
-  rows?: Figure[];
+  /** row override: figures of another manifest, or whole drawing sets
+      (rows with an href navigate between pages instead of scrolling) */
+  rows?: Row[];
+  /** plate heading override */
+  heading?: string;
 };
 
 /**
@@ -21,8 +26,14 @@ type Props = {
  * the sixty-second read of the whole survey. The current figure carries
  * the plate's only vermilion mark.
  */
-export default function SheetIndex({ open, activeIndex, onClose, rows }: Props) {
-  const sheets = rows ?? FIGURES;
+export default function SheetIndex({
+  open,
+  activeIndex,
+  onClose,
+  rows,
+  heading,
+}: Props) {
+  const sheets: Row[] = rows ?? FIGURES;
   const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -41,10 +52,17 @@ export default function SheetIndex({ open, activeIndex, onClose, rows }: Props) 
 
   if (!open) return null;
 
-  const goTo = (id: string) => {
+  const goTo = (row: Row, index: number) => {
     onClose();
+    if (row.href) {
+      /* a drawing-set row: navigate between pages (the sheet turn plays
+         where the browser supports it); the current sheet just closes */
+      if (index !== activeIndex) window.location.assign(row.href);
+      return;
+    }
     requestAnimationFrame(() => {
-      document.getElementById(id)?.scrollIntoView({
+      announceTarget(row.id);
+      document.getElementById(row.id)?.scrollIntoView({
         behavior: prefersReducedMotion() ? "auto" : "smooth",
       });
     });
@@ -55,7 +73,8 @@ export default function SheetIndex({ open, activeIndex, onClose, rows }: Props) 
     <div className={styles.plate} role="dialog" aria-modal="true" aria-label="Sheet index">
       <div className={styles.head}>
         <span className={`${styles.ht} mono`}>
-          SHEET INDEX · {String(sheets.length).padStart(2, "0")} FIGURES
+          {heading ??
+            `SHEET INDEX · ${String(sheets.length).padStart(2, "0")} FIGURES`}
         </span>
         <button
           ref={closeRef}
@@ -73,7 +92,7 @@ export default function SheetIndex({ open, activeIndex, onClose, rows }: Props) 
             type="button"
             className={styles.row}
             style={{ "--d": `${i * 0.06}s` } as React.CSSProperties}
-            onClick={() => goTo(f.id)}
+            onClick={() => goTo(f, i)}
             aria-current={i === activeIndex ? "true" : undefined}
           >
             <span

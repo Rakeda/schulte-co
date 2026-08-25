@@ -1,5 +1,6 @@
 import SurveySection from "@/components/SurveySection";
 import FigureHeader from "@/components/FigureHeader";
+import DetailRef from "@/components/DetailRef";
 import { B2_CHART_CAP, B2_CROSSREF, B2_LEDE, PILE_ROWS } from "@/lib/ai-data";
 import styles from "./Ai.module.css";
 
@@ -46,7 +47,7 @@ export default function ToolPile() {
             </p>
             <p className={`${styles.crossref} mono`}>
               {B2_CROSSREF}{" "}
-              <a href="/#f6">DO NOT AUTOMATE A BAD PROCESS · FIG. 06</a>
+              <DetailRef to="f6" label="DO NOT AUTOMATE A BAD PROCESS" />
             </p>
           </div>
           <div>

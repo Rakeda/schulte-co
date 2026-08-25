@@ -126,3 +126,8 @@
     display: none;
   }
 }
+
+/* the sheet turn: the baseline holds still as part of the fixed frame */
+.baseline {
+  view-transition-name: sc-baseline;
+}

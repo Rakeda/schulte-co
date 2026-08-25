@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { prefersReducedMotion } from "@/lib/motion";
+import { announceTarget, prefersReducedMotion } from "@/lib/motion";
 
 /**
  * The instrument rail: keyboard travel between figure datums.
@@ -36,9 +36,9 @@ export default function InstrumentRail() {
         0
       );
       const go = (i: number) => {
-        secs[Math.max(0, Math.min(secs.length - 1, i))].scrollIntoView({
-          behavior,
-        });
+        const sec = secs[Math.max(0, Math.min(secs.length - 1, i))];
+        announceTarget(sec.id);
+        sec.scrollIntoView({ behavior });
       };
       if (e.key === "j" || e.key === "J") {
         go(cur + 1);

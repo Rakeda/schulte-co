@@ -1,5 +1,6 @@
 import SurveySection from "@/components/SurveySection";
 import FigureHeader from "@/components/FigureHeader";
+import DetailRef from "@/components/DetailRef";
 import Counter from "@/components/Counter";
 import { CONTACT } from "@/lib/data";
 import {
@@ -92,12 +93,12 @@ export default function TrainWhatFailed() {
           <a className={styles.cta} data-snap href={CONTACT.secHref}>
             [ COMMISSION SCHEDULE C ]
           </a>
-          <a className={`${styles.backlink} mono`} href="#c5">
-            REVIEW THE ASSESSMENT METHOD →
-          </a>
-          <a className={`${styles.backlink} mono`} href="/#f1">
-            RETURN TO THE STRUCTURAL SURVEY →
-          </a>
+          <span className={`${styles.backlink} mono`}>
+            <DetailRef to="c5" label="REVIEW THE ASSESSMENT METHOD" />
+          </span>
+          <span className={`${styles.backlink} mono`}>
+            <DetailRef to="f1" label="RETURN TO THE STRUCTURAL SURVEY" />
+          </span>
         </div>
 
         <p className={`${styles.colophon} mono`}>{SEC_COLOPHON}</p>

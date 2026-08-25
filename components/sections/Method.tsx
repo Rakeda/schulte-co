@@ -1,5 +1,6 @@
 import SurveySection from "@/components/SurveySection";
 import FigureHeader from "@/components/FigureHeader";
+import DetailRef from "@/components/DetailRef";
 import { ENTRY_CHIPS, STATIONS, type Station } from "@/lib/data";
 import styles from "./Method.module.css";
 
@@ -124,7 +125,7 @@ export default function Method() {
                   </div>
                   <div className={`${styles.out} mono`}>
                     {s.checkpoint ? (
-                      <a href="#f3" data-snap>{s.note}</a>
+                      <DetailRef to="f3" label={s.note} />
                     ) : (
                       s.output
                     )}

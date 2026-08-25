@@ -28,6 +28,46 @@ export const NAV_ITEMS: NavItem[] = [
 
 export type SectionLink = { fig: string; label: string; href: string };
 
+/** The mobile sheet navigator: one row per drawing set. */
+export const SHEET_ROWS = [
+  { id: "sheet-a", figNo: "A", title: "LANDING", keyDatum: "GROWTH BY DESIGN", href: "/" },
+  { id: "sheet-b", figNo: "B", title: "AI PLANNING", keyDatum: "A ROADMAP, NOT A TOOLBOX", href: "/ai" },
+  { id: "sheet-c", figNo: "C", title: "SECURITY", keyDatum: "PROVE THE RESPONSE", href: "/security" },
+];
+
+/** The handoff (C-1): every page ends by starting the next. */
+export type NextSheet = {
+  href: string;
+  kicker: string;
+  label: string;
+  thesis: string;
+  end: string;
+};
+
+export const NEXT_SHEET: Record<string, NextSheet> = {
+  "/": {
+    href: "/ai",
+    kicker: "THE SURVEY CONTINUES",
+    label: "Next: The AI Practice",
+    thesis: "A ROADMAP, NOT A TOOLBOX",
+    end: "NEXT: AI PLANNING →",
+  },
+  "/ai": {
+    href: "/security",
+    kicker: "THE SURVEY CONTINUES",
+    label: "Next: The Security Practice",
+    thesis: "PROVE THE RESPONSE",
+    end: "NEXT: SECURITY →",
+  },
+  "/security": {
+    href: CONTACT.workHref,
+    kicker: "END OF THE DRAWING SET",
+    label: "Ready to talk?",
+    thesis: "WORK@SCHULTEAND.CO · TAMPA, FLORIDA",
+    end: "END OF SURVEY →",
+  },
+};
+
 export const SECTION_LINKS_HOME: SectionLink[] = [
   { fig: "02", label: "PROBLEM", href: "#f2" },
   { fig: "03", label: "COSTS", href: "#f3" },

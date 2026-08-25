@@ -146,3 +146,18 @@
   flex-wrap: wrap;
   margin-top: 12px;
 }
+
+/* carried forward (C-3): measured values cite the figure that established them */
+.cfsup {
+  font-family: var(--font-mono), monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  color: var(--cobalt);
+  text-decoration: none;
+  vertical-align: super;
+  margin-left: 5px;
+}
+.cfsup:hover,
+.cfsup:focus-visible {
+  color: var(--verm);
+}

@@ -5,6 +5,7 @@ import Baseline from "@/components/Baseline";
 import BracketCursor from "@/components/BracketCursor";
 import InstrumentRail from "@/components/InstrumentRail";
 import Recede from "@/components/Recede";
+import Handoff from "@/components/Handoff";
 import AiHero from "@/components/ai/AiHero";
 import ToolPile from "@/components/ai/ToolPile";
 import FunctionSurvey from "@/components/ai/FunctionSurvey";
@@ -30,6 +31,7 @@ export default function AiPage() {
         <Anatomy />
         <Roadmap />
         <Ownership />
+        <Handoff />
       </main>
       <Baseline />
       <BracketCursor />

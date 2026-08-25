@@ -88,3 +88,39 @@
   color: var(--stone);
   margin-top: 8px;
 }
+
+/* shown work (B-2): rest on the total and the worksheet proves it */
+.total {
+  cursor: help;
+}
+.ck {
+  opacity: 0;
+  color: var(--ochre);
+  transition: opacity 0.18s ease-out;
+}
+.ck2 {
+  transition-delay: 0.14s;
+}
+.showwork .ck {
+  opacity: 1;
+}
+.work {
+  margin: 6px 0 0;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--ochre);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 0.2s ease-out 0.18s, max-height 0.2s ease-out 0.18s;
+}
+.showwork .work {
+  max-height: 3em;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ck,
+  .work {
+    transition: none;
+  }
+}

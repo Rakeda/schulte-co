@@ -53,6 +53,32 @@ export function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+/* ---- the arrival register (ARR / O-4) ----
+ * Commanded travel announces its destination; the landing FigureHeader
+ * plays the checker's ellipse once the scroll settles. Ambient scrolling
+ * never marks anything. Announcements expire after 8s. */
+let pendingTarget: string | null = null;
+let pendingAt = 0;
+
+export function announceTarget(id: string) {
+  pendingTarget = id;
+  pendingAt = typeof performance !== "undefined" ? performance.now() : 0;
+  window.dispatchEvent(new Event("sc-announce"));
+}
+
+export function peekTarget(): string | null {
+  if (pendingTarget && performance.now() - pendingAt > 8000) pendingTarget = null;
+  return pendingTarget;
+}
+
+export function consumeTarget(id: string): boolean {
+  if (peekTarget() === id) {
+    pendingTarget = null;
+    return true;
+  }
+  return false;
+}
+
 export function useScrollFrame(cb: (f: Frame) => void) {
   const ref = useRef(cb);
   ref.current = cb;
