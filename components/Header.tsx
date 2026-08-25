@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { prefersReducedMotion, useScrollFrame } from "@/lib/motion";
-import { CONTACT, NAV_ITEMS } from "@/lib/data";
-import { FIGURES, Figure } from "@/lib/figures";
+import { CONTACT, NAV_ITEMS, SHEET_ROWS } from "@/lib/data";
 import SheetIndex from "@/components/SheetIndex";
 import styles from "./Header.module.css";
 
@@ -20,52 +19,29 @@ function formatCoords(t: number, gp: number): string {
 }
 
 /**
- * Sticky drawing-strip header. The left side is a figure navigator — curated
- * FIG. links whose active entry burns vermilion under a drawn underline,
- * tracked from the same scroll bus as everything else. On load the strip
- * typesets itself (rule draws, items ink-settle in sequence) and the
- * coordinate readout calibrates from 00°00.00′ before joining the scroll drift.
+ * Sticky drawing-strip header. The left side navigates the drawing sets
+ * (A./B./C.); on the field edition the navigator folds into a hamburger at
+ * the strip's right edge, opening the sheet plate. On load the strip
+ * typesets itself and the coordinate readout calibrates from 00°00.00′
+ * before joining the scroll drift.
  */
 export default function Header() {
   const coordsRef = useRef<HTMLSpanElement>(null);
   const gpRef = useRef(0);
   const calibratingRef = useRef(true);
-  const sectionsRef = useRef<HTMLElement[]>([]);
-  const activeRef = useRef(0);
-  const [active, setActive] = useState(0);
   const [indexOpen, setIndexOpen] = useState(false);
-  const [rows, setRows] = useState<Figure[]>(FIGURES);
-  const stationRef = useRef<HTMLButtonElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const onHome = pathname === "/";
+  const activeSheet = Math.max(
+    0,
+    SHEET_ROWS.findIndex((r) =>
+      r.href === "/" ? onHome : pathname?.startsWith(r.href)
+    )
+  );
 
-  useEffect(() => {
-    const sections = Array.from(
-      document.querySelectorAll<HTMLElement>("section[data-fig]")
-    );
-    sectionsRef.current = sections;
-    /* pages outside the home manifest carry their sheet data on the DOM */
-    setRows(
-      sections.map((sec, i) => ({
-        id: sec.id,
-        figNo: sec.dataset.figno ?? FIGURES[i]?.figNo ?? String(i + 1),
-        title: sec.dataset.title ?? FIGURES[i]?.title ?? "",
-        keyDatum: sec.dataset.datum ?? FIGURES[i]?.keyDatum ?? "",
-      }))
-    );
-  }, [pathname]);
-
-  useScrollFrame(({ y, vh, gp }) => {
+  useScrollFrame(({ gp }) => {
     gpRef.current = gp;
-    const sections = sectionsRef.current;
-    let cur = 0;
-    for (let j = 0; j < sections.length; j++) {
-      if (sections[j].offsetTop - vh * 0.45 <= y) cur = j;
-    }
-    if (cur !== activeRef.current) {
-      activeRef.current = cur;
-      setActive(cur);
-    }
     if (calibratingRef.current) return;
     const el = coordsRef.current;
     if (el) el.textContent = formatCoords(1, gp);
@@ -129,17 +105,6 @@ export default function Header() {
             );
           })}
         </nav>
-        <button
-          ref={stationRef}
-          type="button"
-          className={`${styles.station} mono`}
-          aria-expanded={indexOpen}
-          aria-label="Open the sheet index"
-          onClick={() => setIndexOpen(true)}
-        >
-          FIG {rows[active]?.figNo ?? "01"} /{" "}
-          {String(rows.length || 7).padStart(2, "0")}
-        </button>
         <span className={styles.sp} />
         <a
           className={styles.coords}
@@ -154,15 +119,28 @@ export default function Header() {
         <a className={styles.cta} data-snap href={CONTACT.workHref}>
           [ WORK WITH US ]
         </a>
+        <button
+          ref={burgerRef}
+          type="button"
+          className={styles.burger}
+          aria-expanded={indexOpen}
+          aria-label="Open the sheet navigator"
+          onClick={() => setIndexOpen(true)}
+        >
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+        </button>
       </div>
       <span className={styles.rule} aria-hidden="true" />
       <SheetIndex
         open={indexOpen}
-        rows={rows}
-        activeIndex={active}
+        rows={SHEET_ROWS}
+        heading="DRAWING SETS · 03 SHEETS"
+        activeIndex={activeSheet}
         onClose={() => {
           setIndexOpen(false);
-          stationRef.current?.focus();
+          burgerRef.current?.focus();
         }}
       />
     </header>

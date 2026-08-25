@@ -1,11 +1,13 @@
 .ref {
   position: relative;
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   gap: 8px;
   color: var(--cobalt);
   text-decoration: none;
-  white-space: nowrap;
+}
+.ref .bub {
+  align-self: center;
 }
 .lab {
   text-decoration: underline;
@@ -61,5 +63,14 @@
 @media (prefers-reduced-motion: reduce) {
   .tt {
     transition: none;
+  }
+}
+
+/* the hover flag is a fine-pointer affordance; on the field edition it
+   must not exist at all — even invisible, its nowrap width would widen
+   the layout viewport and shrink every fixed-position plate */
+@media (max-width: 880px) {
+  .tt {
+    display: none;
   }
 }
